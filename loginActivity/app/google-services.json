@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "919100171194",
+    "project_id": "run4fun-a6873",
+    "storage_bucket": "run4fun-a6873.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:919100171194:android:87f95f8070048d650bf383",
+        "android_client_info": {
+          "package_name": "com.example.loginactivity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "919100171194-268atqrsc19gnc5jduaga8kr8u8cjt3o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.loginactivity",
+            "certificate_hash": "97b16ead9d0b478fb769d7e2213f35133cf0665f"
+          }
+        },
+        {
+          "client_id": "919100171194-65b7ugr7l4adrbtkka9k432bbtot16bc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgP84P7-ykc-5WPtGhhM_pG1liysjF8QY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "919100171194-65b7ugr7l4adrbtkka9k432bbtot16bc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
