@@ -4,16 +4,18 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.example.run4fun.R;
+import com.example.run4fun.util.Pref;
 import com.example.run4fun.util.SettingItem;
 import com.example.run4fun.util.SettingsAdapter;
 
@@ -36,10 +38,10 @@ public class SettingsActivity extends AppCompatActivity {
         // Construct the data source
         ArrayList<SettingItem> arrayOfSettingItem= new ArrayList<SettingItem>();
         //add items to listView
-        arrayOfSettingItem.add(new SettingItem("User","luram"));
-        arrayOfSettingItem.add(new SettingItem("Height","luram"));
-        arrayOfSettingItem.add(new SettingItem("Weight","luram"));
-        arrayOfSettingItem.add(new SettingItem("Age","luram"));
+        arrayOfSettingItem.add(new SettingItem(getString(R.string.user_text), Pref.getValue(this,"user", "user")));
+        arrayOfSettingItem.add(new SettingItem(getString(R.string.height_text),Pref.getValue(this,"height", "height")));
+        arrayOfSettingItem.add(new SettingItem(getString(R.string.weight_text),Pref.getValue(this,"weight", "weight")));
+        arrayOfSettingItem.add(new SettingItem(getString(R.string.age_text),Pref.getValue(this,"age", "age")));
         // Create the adapter to convert the array to views
         SettingsAdapter adapter = new SettingsAdapter(this, arrayOfSettingItem);
         // Attach the adapter to a ListView
@@ -55,25 +57,25 @@ public class SettingsActivity extends AppCompatActivity {
                     //user
                     case 0:
                         {
-                            createAlertDialogToSettingItem("user","luram");
+
                     }
                     break;
                     //height
                     case 1:
                     {
-                        createAlertDialogToSettingItem("height","luram");
+                        createAlertDialogToSettingItem(getString(R.string.height_text),"Please enter " +getString(R.string.height_text));
                     }
                         break;
                     //weight
                     case 2:
                     {
-                        createAlertDialogToSettingItem("weight","luram");
+                        createAlertDialogToSettingItem(getString(R.string.weight_text),"Please enter " +getString(R.string.weight_text));
                     }
                         break;
                     //age
                     case 3:
                     {
-                        createAlertDialogToSettingItem("age","luram");
+                        createAlertDialogToSettingItem(getString(R.string.age_text),"Please enter " +getString(R.string.age_text));
                     }
                     break;
                     default:
@@ -92,13 +94,15 @@ public class SettingsActivity extends AppCompatActivity {
 
 // Set an EditText view to get user input
         final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_NUMBER);
         alert.setView(input);
 
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString();
-                Log.d("", "Pin Value : " + value);
-                return;
+                Pref.setValue(getApplicationContext(),title.toLowerCase(),value);
+                Toast.makeText(getApplicationContext(),"'"+title +"' change to '"+value+"' successfully",Toast.LENGTH_SHORT).show();
+                restartActivity();
             }
         });
 
@@ -112,5 +116,10 @@ public class SettingsActivity extends AppCompatActivity {
         alert.show();
     }
 
-    public void sharedPrefrances
+    private void restartActivity() {
+        Intent starterIntent = getIntent();
+        finish();
+        startActivity(starterIntent);
+    }
+
 }

@@ -30,15 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="bottom|center"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/save_settings_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/save_text"
-                android:textSize="25sp" />
-        </LinearLayout>
+            android:orientation="vertical"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
