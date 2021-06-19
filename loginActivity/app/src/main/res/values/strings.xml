@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">loginActivity</string>
+    <string name="app_name">Run4Fun</string>
     <string name="statistical_analyze_text">Statistical Analyze</string>
     <string name="settings_text">Settings</string>
     <string name="activity_history_text">Activity History</string>
