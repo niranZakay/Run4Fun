@@ -6,4 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".activities.WorkOutHistoryActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/work_out_history_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/work_out_history"
+            android:textSize="25sp" />
+
+        <ListView
+            android:id="@+id/workout_history_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

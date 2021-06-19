@@ -1,7 +1,7 @@
 package com.example.run4fun.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import com.example.run4fun.R;
 import android.os.Bundle;
 
 public class WorkOutFinishActivity extends AppCompatActivity {

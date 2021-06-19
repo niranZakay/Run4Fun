@@ -1,3 +1,23 @@
 <resources>
-    <string name="app_name">loginActivity</string>
+    <string name="app_name">Run4Fun</string>
+    <string name="statistical_analyze_text">Statistical Analyze</string>
+    <string name="settings_text">Settings</string>
+    <string name="activity_history_text">Activity History</string>
+    <string name="start_activity_text">Start Activity!</string>
+    <string name="save_text">Save!</string>
+    <string name="age_text">Age</string>
+    <string name="height_text">Height</string>
+    <string name="weight_text">Weight</string>
+    <string name="user_text">User</string>
+    <string name="ok_text">OK</string>
+    <string name="cancel_text">cancel</string>
+    <string name="please_enter_text">Please enter </string>
+    <string name="work_out_history">Workout history</string>
+    <string name="date_text">Date: </string>
+    <string name="distance_text">Distance: </string>
+    <string name="time_text">Time: </string>
+    <string name="velocity_text">Velocity: </string>
+    <string name="stop_text">Stop </string>
+    <string name="pause_text">Pause </string>
+    <string name="resume_text">Resume </string>
 </resources>
