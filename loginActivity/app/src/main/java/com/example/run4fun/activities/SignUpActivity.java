@@ -1,4 +1,4 @@
-package com.example.loginactivity;
+package com.example.run4fun.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,12 +12,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.run4fun.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class signUpActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity {
     private static final String TAG="signUpActivity";
     @Override
     protected void onCreate(@Nullable  Bundle savedInstanceState) {
@@ -48,17 +49,17 @@ public class signUpActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull  Task<Void> task) {
                                             if(task.isSuccessful())
                                             {
-                                                Toast.makeText(signUpActivity.this,"register successfully please check your email for verification"
+                                                Toast.makeText(SignUpActivity.this,"register successfully please check your email for verification"
                                                         ,Toast.LENGTH_LONG).show();
                                                 email.setText("");
                                                 password.setText("");
-                                            }else {Toast.makeText(signUpActivity.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();}
+                                            }else {Toast.makeText(SignUpActivity.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();}
 
                                         }
                                     });
 
                                 }
-                                else { Toast.makeText(signUpActivity.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();}
+                                else { Toast.makeText(SignUpActivity.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();}
                             }
                         });
             }
@@ -70,7 +71,7 @@ public class signUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.d(TAG,"onClick: clicked button.");
-                Intent intent=new Intent(signUpActivity.this,MainActivity.class);
+                Intent intent=new Intent(SignUpActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });

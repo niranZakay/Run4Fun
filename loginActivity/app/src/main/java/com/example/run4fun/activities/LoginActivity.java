@@ -1,4 +1,4 @@
-package com.example.loginactivity;
+package com.example.run4fun.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,18 +11,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.run4fun.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     private static final String TAG="MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         EditText useremail= findViewById(R.id.editTextEmail);
         EditText userpassword=findViewById(R.id.passwordeitTextText);
@@ -41,13 +42,13 @@ public class MainActivity extends AppCompatActivity {
                         if(task.isSuccessful())
                         {
                             if(firebaseAuth.getCurrentUser().isEmailVerified()){
-                                Toast.makeText(MainActivity.this,"success"
+                                Toast.makeText(LoginActivity.this,"success"
                                         ,Toast.LENGTH_LONG).show();
                                 useremail.setText("");
                                 userpassword.setText("");
-                            }else {Toast.makeText(MainActivity.this,"please verify your email address",Toast.LENGTH_LONG).show();}
+                            }else {Toast.makeText(LoginActivity.this,"please verify your email address",Toast.LENGTH_LONG).show();}
                         }
-                        else {Toast.makeText(MainActivity.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();}
+                        else {Toast.makeText(LoginActivity.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();}
                     }
                 });
             }
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Log.d(TAG,"onClick: clicked button.");
-            Intent intent=new Intent(MainActivity.this,signUpActivity.class);
+            Intent intent=new Intent(LoginActivity.this, SignUpActivity.class);
             startActivity(intent);
         }
         });
