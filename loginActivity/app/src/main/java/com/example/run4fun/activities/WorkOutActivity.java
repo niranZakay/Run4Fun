@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.example.run4fun.R;
+
 public class WorkOutActivity extends AppCompatActivity {
 
     @Override
