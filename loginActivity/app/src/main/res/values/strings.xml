@@ -4,4 +4,5 @@
     <string name="settings_text">Settings</string>
     <string name="activity_history_text">Activity History</string>
     <string name="start_activity_text">Start Activity!</string>
+    <string name="save_text">Save!</string>
 </resources>
