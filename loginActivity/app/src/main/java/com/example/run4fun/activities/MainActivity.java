@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         final Button button = (Button) findViewById(R.id.acitivity_history_button);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,WorkOutActivity.class);
+                Intent intent = new Intent(MainActivity.this,WorkOutHistoryActivity.class);
                 startActivity(intent);
             }
         });

@@ -63,19 +63,19 @@ public class SettingsActivity extends AppCompatActivity {
                     //height
                     case 1:
                     {
-                        createAlertDialogToSettingItem(getString(R.string.height_text),"Please enter " +getString(R.string.height_text));
+                        createAlertDialogToSettingItem(getString(R.string.height_text),getString(R.string.please_enter_text) +" "+getString(R.string.height_text));
                     }
                         break;
                     //weight
                     case 2:
                     {
-                        createAlertDialogToSettingItem(getString(R.string.weight_text),"Please enter " +getString(R.string.weight_text));
+                        createAlertDialogToSettingItem(getString(R.string.weight_text),getString(R.string.please_enter_text)+" "+getString(R.string.weight_text));
                     }
                         break;
                     //age
                     case 3:
                     {
-                        createAlertDialogToSettingItem(getString(R.string.age_text),"Please enter " +getString(R.string.age_text));
+                        createAlertDialogToSettingItem(getString(R.string.age_text),getString(R.string.please_enter_text )+" "+getString(R.string.age_text));
                     }
                     break;
                     default:
@@ -97,7 +97,7 @@ public class SettingsActivity extends AppCompatActivity {
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
         alert.setView(input);
 
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        alert.setPositiveButton(getString(R.string.ok_text), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString();
                 Pref.setValue(getApplicationContext(),title.toLowerCase(),value);
@@ -106,7 +106,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        alert.setNegativeButton("Cancel",
+        alert.setNegativeButton(getString(R.string.cancel_text),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // TODO Auto-generated method stub
