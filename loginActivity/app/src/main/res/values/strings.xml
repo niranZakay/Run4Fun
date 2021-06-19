@@ -16,4 +16,8 @@
     <string name="date_text">Date: </string>
     <string name="distance_text">Distance: </string>
     <string name="time_text">Time: </string>
+    <string name="velocity_text">Velocity: </string>
+    <string name="stop_text">Stop </string>
+    <string name="pause_text">Pause </string>
+    <string name="resume_text">Resume </string>
 </resources>
