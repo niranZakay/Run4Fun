@@ -1,10 +1,14 @@
 package com.example.run4fun.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -17,12 +21,21 @@ import com.example.run4fun.R;
 import com.example.run4fun.WorkOut;
 import com.example.run4fun.db.DataAccess;
 import com.example.run4fun.db.WorkOutSchema;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class WorkOutActivity extends AppCompatActivity {
+import static com.example.run4fun.BuildConfig.MAPS_API_KEY;
+
+public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCallback {
     // Number of seconds displayed
     // on the stopwatch.
     private int seconds = 0;
@@ -37,6 +50,7 @@ public class WorkOutActivity extends AppCompatActivity {
     private static String time = "time";
 
     private static String TAG = "WorkOutActivity:";
+    private MapView mapView;
 
 
     @Override
@@ -68,7 +82,16 @@ public class WorkOutActivity extends AppCompatActivity {
         final Button resumeButton = findViewById(R.id.resume_button);
         resumeButton.setVisibility(View.GONE);
 
+        Bundle mapViewBundule = null;
+        if (savedInstanceState != null) {
+            mapViewBundule = savedInstanceState.getBundle(MAPS_API_KEY);
+        }
+        mapView = (MapView) findViewById(R.id.mapView2);
+        mapView.onCreate(mapViewBundule);
+        mapView.getMapAsync(this);
+
     }
+
     @Override
     public void onSaveInstanceState(
             Bundle savedInstanceState) {
@@ -84,8 +107,7 @@ public class WorkOutActivity extends AppCompatActivity {
     // If the activity is paused,
     // stop the stopwatch.
     @Override
-    protected void onPause()
-    {
+    protected void onPause() {
         super.onPause();
         wasRunning = running;
         running = false;
@@ -95,8 +117,7 @@ public class WorkOutActivity extends AppCompatActivity {
     // start the stopwatch
     // again if it was running previously.
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
         if (wasRunning) {
             running = true;
@@ -107,8 +128,7 @@ public class WorkOutActivity extends AppCompatActivity {
     // when the Stop button is clicked.
     // Below method gets called
     // when the Stop button is clicked.
-    public void onClickPause(View view)
-    {
+    public void onClickPause(View view) {
         //show resume button
         final Button resumeButton = findViewById(R.id.resume_button);
         resumeButton.setVisibility(View.VISIBLE);
@@ -120,8 +140,7 @@ public class WorkOutActivity extends AppCompatActivity {
         running = false;
     }
 
-    public void onClickResume(View view)
-    {
+    public void onClickResume(View view) {
         //show pause button
         final Button pauseButton = findViewById(R.id.pause_button);
         pauseButton.setVisibility(View.VISIBLE);
@@ -133,8 +152,7 @@ public class WorkOutActivity extends AppCompatActivity {
         running = true;
     }
 
-    public void onClickFinish(View view)
-    {
+    public void onClickFinish(View view) {
         createAlertBeforeFinish();
     }
 
@@ -142,8 +160,7 @@ public class WorkOutActivity extends AppCompatActivity {
     // the Reset button is clicked.
     // Below method gets called
     // when the Reset button is clicked.
-    public void onClickReset(View view)
-    {
+    public void onClickReset(View view) {
         running = false;
         seconds = 0;
     }
@@ -152,12 +169,11 @@ public class WorkOutActivity extends AppCompatActivity {
     // The runTimer() method uses a Handler
     // to increment the seconds and
     // update the text view.
-    private void runTimer()
-    {
+    private void runTimer() {
         running = true;
         // Get the text view.
         final TextView timeView
-                = (TextView)findViewById(
+                = (TextView) findViewById(
                 R.id.timer_textview);
 
         // Creates a new Handler
@@ -173,8 +189,7 @@ public class WorkOutActivity extends AppCompatActivity {
         handler.post(new Runnable() {
             @Override
 
-            public void run()
-            {
+            public void run() {
 
                 int minutes = (seconds % 3600) / 60;
                 int secs = seconds % 60;
@@ -203,8 +218,7 @@ public class WorkOutActivity extends AppCompatActivity {
         });
     }
 
-    public void createAlertBeforeFinish()
-    {
+    public void createAlertBeforeFinish() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -215,25 +229,18 @@ public class WorkOutActivity extends AppCompatActivity {
 
             public void onClick(DialogInterface dialog, int which) {
                 //save the workout in db sqlite
-                DataAccess dataAccess= DataAccess.DataAccess(getApplicationContext(), WorkOutSchema.databaseName);
-                boolean result = dataAccess.addWorkOut(date,distance,time);
-                if(result)
-                {
+                DataAccess dataAccess = DataAccess.DataAccess(getApplicationContext(), WorkOutSchema.databaseName);
+                boolean result = dataAccess.addWorkOut(date, distance, time);
+                if (result) {
                     //save success
                     Log.i(TAG, "db save results: successfully");
                     Toast.makeText(getApplicationContext(), getString(R.string.save_db_success_text), Toast.LENGTH_SHORT).show();
 
-                }
-                else
-                {
+                } else {
                     //save failed
                     Log.i(TAG, "db save results: failed");
                     Toast.makeText(getApplicationContext(), getString(R.string.save_db_failed_text), Toast.LENGTH_SHORT).show();
                 }
-
-
-
-
 
 
                 //back to main activity
@@ -256,4 +263,37 @@ public class WorkOutActivity extends AppCompatActivity {
         alert.show();
     }
 
+    @Override
+    public void onMapReady(@NonNull @NotNull GoogleMap googleMap) {
+        googleMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        googleMap.setMyLocationEnabled(true);
+    }
+
+    @Override
+    protected void onDestroy() {
+        mapView.onDestroy();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mapView.onStop();
+    }
 }
