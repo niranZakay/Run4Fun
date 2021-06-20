@@ -7,13 +7,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.run4fun.R;
+import com.example.run4fun.WorkOut;
+import com.example.run4fun.db.DataAccess;
+import com.example.run4fun.db.WorkOutSchema;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class WorkOutActivity extends AppCompatActivity {
@@ -25,6 +31,13 @@ public class WorkOutActivity extends AppCompatActivity {
     private boolean running;
 
     private boolean wasRunning;
+
+    private static String date = "date";
+    private static String distance = "distance";
+    private static String time = "time";
+
+    private static String TAG = "WorkOutActivity:";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,7 +215,28 @@ public class WorkOutActivity extends AppCompatActivity {
 
             public void onClick(DialogInterface dialog, int which) {
                 //save the workout in db sqlite
-                Toast.makeText(getApplicationContext(), "save workout in db", Toast.LENGTH_SHORT).show();
+                DataAccess dataAccess= DataAccess.DataAccess(getApplicationContext(), WorkOutSchema.databaseName);
+                boolean result = dataAccess.addWorkOut(date,distance,time);
+                if(result)
+                {
+                    //save success
+                    Log.i(TAG, "db save results: successfully");
+                    Toast.makeText(getApplicationContext(), getString(R.string.save_db_success_text), Toast.LENGTH_SHORT).show();
+
+                }
+                else
+                {
+                    //save failed
+                    Log.i(TAG, "db save results: failed");
+                    Toast.makeText(getApplicationContext(), getString(R.string.save_db_failed_text), Toast.LENGTH_SHORT).show();
+                }
+
+
+
+
+
+
+                //back to main activity
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 finish();
                 startActivity(intent);

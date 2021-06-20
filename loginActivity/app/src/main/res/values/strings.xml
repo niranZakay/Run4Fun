@@ -24,5 +24,7 @@
     <string name="yes_text">Yes </string>
     <string name="no_text">No </string>
     <string name="alert_text">Alert </string>
+    <string name="save_db_success_text">save workout in db was successfully! </string>
+    <string name="save_db_failed_text">save workout in db was failed! </string>
     <string name="alert_before_finish_text">Are you sure you want to finish and save the workout?</string>
 </resources>
