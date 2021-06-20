@@ -2,11 +2,8 @@ package com.example.run4fun.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.run4fun.R;
-import com.example.run4fun.util.Pref;
-import com.example.run4fun.util.SettingItem;
-import com.example.run4fun.util.SettingsAdapter;
-import com.example.run4fun.util.WorkOutHistoryAdapter;
-import com.example.run4fun.util.WorkOutHistoryItem;
+import com.example.run4fun.adapters.WorkOutHistoryAdapter;
+import com.example.run4fun.WorkOutHistoryItem;
 
 import android.os.Bundle;
 import android.widget.ListView;

@@ -1,4 +1,4 @@
-package com.example.run4fun.util;
+package com.example.run4fun.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.run4fun.R;
+import com.example.run4fun.WorkOutHistoryItem;
 
 import java.util.ArrayList;
 
