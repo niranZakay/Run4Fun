@@ -1,8 +1,8 @@
-package com.example.run4fun.util;
+package com.example.run4fun;
 
 public class SettingItem {
-    String key;
-    String value;
+    public String key;
+    public String value;
 
     public SettingItem(String key,String value)
     {

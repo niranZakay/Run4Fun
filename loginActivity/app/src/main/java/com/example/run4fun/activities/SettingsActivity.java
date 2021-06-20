@@ -16,8 +16,8 @@ import android.widget.Toast;
 
 import com.example.run4fun.R;
 import com.example.run4fun.util.Pref;
-import com.example.run4fun.util.SettingItem;
-import com.example.run4fun.util.SettingsAdapter;
+import com.example.run4fun.SettingItem;
+import com.example.run4fun.adapters.SettingsAdapter;
 
 import java.util.ArrayList;
 
