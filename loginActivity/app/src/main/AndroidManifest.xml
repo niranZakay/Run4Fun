@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.run4fun">
-
+    <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <application
         android:allowBackup="true"
@@ -11,7 +11,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LoginActivity">
         <activity android:name=".activities.WorkOutFinishActivity"></activity>
-        <activity android:name=".activities.WorkOutActivity" />
+        <activity android:name=".activities.WorkOutActivity" >
+
+
+
+        </activity>
+
         <activity android:name=".activities.WorkOutDataComponent" />
         <activity android:name=".activities.WorkOutHistoryActivity" />
         <activity android:name=".activities.SettingsActivity" />
@@ -25,8 +30,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyA5UVbJ3y6yRhiCe7UCj7URMFNy8W54hsk" />
+
     </application>
-    <meta-data
-        android:name="com.google.android.geo.API_KEY"
-        android:value="${MAPS_API_KEY}" />
+
 </manifest>
