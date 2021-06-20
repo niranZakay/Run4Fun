@@ -237,9 +237,7 @@ public class WorkOutActivity extends AppCompatActivity {
 
 
                 //back to main activity
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 finish();
-                startActivity(intent);
                 dialog.dismiss();
             }
         });
