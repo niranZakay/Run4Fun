@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -220,6 +222,9 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
 
     public void createAlertBeforeFinish() {
 
+        //make vibration
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(300);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setTitle(getString(R.string.alert_text));
