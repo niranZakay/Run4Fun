@@ -270,7 +270,7 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
 
     @Override
     public void onMapReady(@NonNull @NotNull GoogleMap googleMap) {
-        googleMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        googleMap.addMarker(new MarkerOptions().position(new LatLng(53.2734, 7.77832031)).title("Marker"));
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -281,6 +281,7 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
+
         googleMap.setMyLocationEnabled(true);
     }
 

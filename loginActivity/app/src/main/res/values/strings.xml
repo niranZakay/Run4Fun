@@ -33,4 +33,5 @@
     <string name="pai_chart_title_text">Distance Graph</string>
     <string name="bar_chart_title_text">Calories Graph</string>
     <string name="month_text">Month</string>
+    <string name="google_map_key">AIzaSyAkrr5osbGCAKg5TXAxUGcWDaOWxvXh9Kk</string>
 </resources>
