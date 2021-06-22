@@ -6,10 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
@@ -19,25 +23,30 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.run4fun.Coordinate;
 import com.example.run4fun.R;
 import com.example.run4fun.WorkOut;
 import com.example.run4fun.db.DataAccess;
 import com.example.run4fun.db.WorkOutSchema;
+import com.example.run4fun.listeners.myLocationListener;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import static com.example.run4fun.BuildConfig.MAPS_API_KEY;
 
-public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCallback,LocationListener{
     // Number of seconds displayed
     // on the stopwatch.
     private int seconds = 0;
@@ -47,12 +56,15 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
 
     private boolean wasRunning;
 
-    private static String date = "date";
-    private static String distance = "distance";
-    private static String time = "time";
+    //for WorkOut instance
+    private static String date;
+    private static String distance="0";
+    public static String time;
+    private static List<Coordinate> coordinates =new ArrayList<>();
 
     private static String TAG = "WorkOutActivity:";
     private MapView mapView;
+    private GoogleMap googleMap;
 
 
     @Override
@@ -91,8 +103,25 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
         mapView = (MapView) findViewById(R.id.mapView2);
         mapView.onCreate(mapViewBundule);
         mapView.getMapAsync(this);
+        LocationManager locationManager = (LocationManager)
+                getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
+        //get current date
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+        date = sdf.format(new Date());
     }
+    @Override
+    public void onLocationChanged(Location location) {
+        Log.i(TAG, "Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
+        //set on map
+        googleMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("Me"));
+        coordinates.add(new Coordinate(location.getLatitude(),location.getAltitude()));
+    }
+
 
     @Override
     public void onSaveInstanceState(
@@ -235,7 +264,10 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
             public void onClick(DialogInterface dialog, int which) {
                 //save the workout in db sqlite
                 DataAccess dataAccess = DataAccess.DataAccess(getApplicationContext(), WorkOutSchema.databaseName);
-                boolean result = dataAccess.addWorkOut(date, distance, time);
+                String jsonCoordinates =  new Gson().toJson(coordinates);
+                TextView timerTextView = (TextView)findViewById(R.id.timer_textview);
+                time = timerTextView.getText().toString();
+                boolean result = dataAccess.addWorkOut(date, distance, time,jsonCoordinates);
                 if (result) {
                     //save success
                     Log.i(TAG, "db save results: successfully");
@@ -270,7 +302,7 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
 
     @Override
     public void onMapReady(@NonNull @NotNull GoogleMap googleMap) {
-        googleMap.addMarker(new MarkerOptions().position(new LatLng(53.2734, 7.77832031)).title("Marker"));
+        this.googleMap = googleMap;
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -281,8 +313,7 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-
-        googleMap.setMyLocationEnabled(true);
+        this.googleMap.setMyLocationEnabled(true);
     }
 
     @Override

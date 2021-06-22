@@ -14,7 +14,7 @@
     <string name="please_enter_text">Please enter </string>
     <string name="work_out_history">Workout history</string>
     <string name="date_text">Date: </string>
-    <string name="distance_text">Distance</string>
+    <string name="distance_text">Distance:</string>
     <string name="time_text">Time: </string>
     <string name="velocity_text">Velocity: </string>
     <string name="stop_text">Stop </string>
@@ -34,4 +34,5 @@
     <string name="bar_chart_title_text">Calories Graph</string>
     <string name="month_text">Month</string>
     <string name="google_map_key">AIzaSyAkrr5osbGCAKg5TXAxUGcWDaOWxvXh9Kk</string>
+    <string name="coordinates_text">Coordinates:</string>
 </resources>

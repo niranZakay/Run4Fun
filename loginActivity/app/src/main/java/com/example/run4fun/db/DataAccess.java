@@ -7,9 +7,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.run4fun.Coordinate;
 import com.example.run4fun.WorkOut;
+import com.google.gson.Gson;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 //added
@@ -38,13 +42,14 @@ public class DataAccess {
     }
 
 
-    public boolean addWorkOut(String date, String distance, String time)
+    public boolean addWorkOut(String date, String distance, String time,String jsonCoordinates)
     {
 
         ContentValues vals = new ContentValues();
         vals.put(WorkOutSchema.COLUMN_WORKOUT_DATE, date);
         vals.put(WorkOutSchema.COLUMN_WORKOUT_DISTANCE, distance);
         vals.put(WorkOutSchema.COLUMN_WORKOUT_TIME, time);
+        vals.put(WorkOutSchema.COLUMN_COORDINATES, jsonCoordinates);
         long result = db.insert(WorkOutSchema.WORKOUTS_TABLE, "null", vals);
         if(result>0)
         {
@@ -60,13 +65,14 @@ public class DataAccess {
     {
         List<WorkOut> workoOutList = new ArrayList<>();
         SQLiteDatabase sqLiteDatabase= helper.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.query(WorkOutSchema.WORKOUTS_TABLE,new String[]{WorkOutSchema.COLUMN_WORKOUT_DATE,WorkOutSchema.COLUMN_WORKOUT_DISTANCE,WorkOutSchema.COLUMN_WORKOUT_TIME},"",null,"","","");
+        Cursor cursor = sqLiteDatabase.query(WorkOutSchema.WORKOUTS_TABLE,new String[]{WorkOutSchema.COLUMN_WORKOUT_DATE,WorkOutSchema.COLUMN_WORKOUT_DISTANCE,WorkOutSchema.COLUMN_WORKOUT_TIME,WorkOutSchema.COLUMN_COORDINATES},"",null,"","","");
         while(cursor.moveToNext())
         {
             String date = cursor.getString(cursor.getColumnIndex(WorkOutSchema.COLUMN_WORKOUT_DATE));
             String distance = cursor.getString(cursor.getColumnIndex(WorkOutSchema.COLUMN_WORKOUT_DISTANCE));
             String time = cursor.getString(cursor.getColumnIndex(WorkOutSchema.COLUMN_WORKOUT_TIME));
-            WorkOut workoOut = new WorkOut(date,distance,time);
+            String coordinates = cursor.getString(cursor.getColumnIndex(WorkOutSchema.COLUMN_COORDINATES));
+            WorkOut workoOut = new WorkOut(date,distance,time, coordinates);
             workoOutList.add(workoOut);
         }
         cursor.close();

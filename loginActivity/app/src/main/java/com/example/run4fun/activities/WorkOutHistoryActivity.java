@@ -32,7 +32,7 @@ public class WorkOutHistoryActivity extends AppCompatActivity {
 
         for (WorkOut workout:workOuts)
         {
-            arrayOfWorkOutHistoryItems.add(new WorkOutHistoryItem(getString(R.string.date_text), workout.date,getString(R.string.distance_text),workout.distance,getString(R.string.time_text),workout.time));
+            arrayOfWorkOutHistoryItems.add(new WorkOutHistoryItem(getString(R.string.date_text), workout.date,getString(R.string.distance_text),workout.distance,getString(R.string.time_text),workout.time,getString(R.string.coordinates_text),workout.coordinates));
         }
 
         // Create the adapter to convert the array to views
