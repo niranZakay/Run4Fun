@@ -4,7 +4,7 @@
     <string name="settings_text">Settings</string>
     <string name="activity_history_text">Activity History</string>
     <string name="start_activity_text">Start Activity!</string>
-    <string name="save_text">Save!</string>
+    <string name="save_text">Save</string>
     <string name="age_text">Age</string>
     <string name="height_text">Height</string>
     <string name="weight_text">Weight</string>
@@ -35,4 +35,7 @@
     <string name="month_text">Month</string>
     <string name="google_map_key">AIzaSyAkrr5osbGCAKg5TXAxUGcWDaOWxvXh9Kk</string>
     <string name="coordinates_text">Coordinates:</string>
+    <string name="discard_text">Discard</string>
+    <string name="summary_text">Summary</string>
+    <string name="alert_before_discard_text">are you sure you want to discard? (the workout will delete)</string>
 </resources>

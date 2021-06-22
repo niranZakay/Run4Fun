@@ -15,4 +15,8 @@ public class WorkOut {
         this.time = time;
         this.coordinates = coordinates;
     }
+
+    public WorkOut() {
+
+    }
 }

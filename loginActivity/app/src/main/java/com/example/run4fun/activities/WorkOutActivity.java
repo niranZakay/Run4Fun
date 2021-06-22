@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,10 +24,8 @@ import android.widget.Toast;
 
 import com.example.run4fun.Coordinate;
 import com.example.run4fun.R;
-import com.example.run4fun.WorkOut;
 import com.example.run4fun.db.DataAccess;
 import com.example.run4fun.db.WorkOutSchema;
-import com.example.run4fun.listeners.myLocationListener;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -65,6 +62,7 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
     private static String TAG = "WorkOutActivity:";
     private MapView mapView;
     private GoogleMap googleMap;
+    private LocationManager locationManager;
 
 
     @Override
@@ -100,10 +98,10 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
         if (savedInstanceState != null) {
             mapViewBundule = savedInstanceState.getBundle(MAPS_API_KEY);
         }
-        mapView = (MapView) findViewById(R.id.mapView2);
+        mapView = (MapView) findViewById(R.id.mapViewWorkOut);
         mapView.onCreate(mapViewBundule);
         mapView.getMapAsync(this);
-        LocationManager locationManager = (LocationManager)
+        locationManager = (LocationManager)
                 getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
@@ -142,7 +140,9 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
         super.onPause();
         wasRunning = running;
         running = false;
+        mapView.onPause();
     }
+
 
     // If the activity is resumed,
     // start the stopwatch
@@ -251,53 +251,24 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
 
     public void createAlertBeforeFinish() {
 
-        //make vibration
-        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(300);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        String jsonCoordinates =  new Gson().toJson(coordinates);
+        TextView timerTextView = (TextView)findViewById(R.id.timer_textview);
+        time = timerTextView.getText().toString();
 
-        builder.setTitle(getString(R.string.alert_text));
-        builder.setMessage(getString(R.string.alert_before_finish_text));
+        //move date,time,distance,coordinates to WorkOutFinishActivity
+        Intent intent = new Intent(getBaseContext(), WorkOutFinishActivity.class);
+        intent.putExtra(WorkOutFinishActivity.DATE,date);
+        intent.putExtra(WorkOutFinishActivity.TIME,time);
+        intent.putExtra(WorkOutFinishActivity.DISTANCE,distance);
+        intent.putExtra(WorkOutFinishActivity.COORDINATES,jsonCoordinates);
+        startActivity(intent);
+        finish();
 
-        builder.setPositiveButton(getString(R.string.yes_text), new DialogInterface.OnClickListener() {
-
-            public void onClick(DialogInterface dialog, int which) {
-                //save the workout in db sqlite
-                DataAccess dataAccess = DataAccess.DataAccess(getApplicationContext(), WorkOutSchema.databaseName);
-                String jsonCoordinates =  new Gson().toJson(coordinates);
-                TextView timerTextView = (TextView)findViewById(R.id.timer_textview);
-                time = timerTextView.getText().toString();
-                boolean result = dataAccess.addWorkOut(date, distance, time,jsonCoordinates);
-                if (result) {
-                    //save success
-                    Log.i(TAG, "db save results: successfully");
-                    Toast.makeText(getApplicationContext(), getString(R.string.save_db_success_text), Toast.LENGTH_SHORT).show();
-
-                } else {
-                    //save failed
-                    Log.i(TAG, "db save results: failed");
-                    Toast.makeText(getApplicationContext(), getString(R.string.save_db_failed_text), Toast.LENGTH_SHORT).show();
-                }
+        //stop get location
+        locationManager.removeUpdates(this);
+        locationManager = null;
 
 
-                //back to main activity
-                finish();
-                dialog.dismiss();
-            }
-        });
-
-        builder.setNegativeButton(getString(R.string.no_text), new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                // Do nothing
-                dialog.dismiss();
-            }
-        });
-
-        AlertDialog alert = builder.create();
-        alert.show();
     }
 
     @Override
