@@ -8,13 +8,18 @@ import com.example.run4fun.WorkOutHistoryItem;
 import com.example.run4fun.db.DataAccess;
 import com.example.run4fun.db.WorkOutSchema;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class WorkOutHistoryActivity extends AppCompatActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,5 +45,19 @@ public class WorkOutHistoryActivity extends AppCompatActivity {
         // Attach the adapter to a ListView
         ListView listView = (ListView) findViewById(R.id.workout_history_listview);
         listView.setAdapter(adapter);
+
+
+        //add listner for click on the list
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> listView, View itemView, int itemPosition, long itemId) {
+                //move date,time,distance,coordinates to WorkOutFinishActivity
+                Intent intent = new Intent(getBaseContext(), WorkOutDataAcvtivity.class);
+                intent.putExtra(WorkOutFinishActivity.DATE,arrayOfWorkOutHistoryItems.get(itemPosition).dateValue);
+                intent.putExtra(WorkOutFinishActivity.TIME,arrayOfWorkOutHistoryItems.get(itemPosition).timeValue);
+                intent.putExtra(WorkOutFinishActivity.DISTANCE,arrayOfWorkOutHistoryItems.get(itemPosition).distanceValue);
+                intent.putExtra(WorkOutFinishActivity.COORDINATES,arrayOfWorkOutHistoryItems.get(itemPosition).coordinatesValue);
+                startActivity(intent);
+            }
+        });
+            }
     }
-}

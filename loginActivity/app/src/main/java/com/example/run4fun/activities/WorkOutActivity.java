@@ -116,7 +116,7 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
     public void onLocationChanged(Location location) {
         Log.i(TAG, "Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
         //set on map
-        googleMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("Me"));
+        //googleMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("Me"));
         coordinates.add(new Coordinate(location.getLatitude(),location.getAltitude()));
     }
 
