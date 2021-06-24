@@ -39,4 +39,5 @@
     <string name="summary_text">Summary</string>
     <string name="alert_before_discard_text">are you sure you want to discard? (the workout will delete)</string>
     <string name="workout_data_text">WorkOut Data</string>
+    <string name="avg_pace_text">Avg. Pace</string>
 </resources>

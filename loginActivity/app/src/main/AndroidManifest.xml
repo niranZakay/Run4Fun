@@ -20,7 +20,9 @@
 
         </activity>
 
-        <activity android:name=".activities.WorkOutDataAcvtivity" />
+        <activity android:name=".activities.WorkOutDataAcvtivity"
+            android:theme="@style/Theme.AppCompat.Translucent"
+            />
         <activity android:name=".activities.WorkOutHistoryActivity" />
         <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.StatisticalAnalysisActivity" />
