@@ -32,9 +32,11 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
+import com.google.maps.android.SphericalUtil;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,9 +57,13 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
 
     //for WorkOut instance
     private static String date;
-    private static String distance="0";
+    private static double distance=0;
     public static String time;
     private static List<Coordinate> coordinates =new ArrayList<>();
+    private TextView tvDistance;
+    private TextView tvAvgPace;
+    private TextView tvCalories;
+    private TextView tvVelocity;
 
     private static String TAG = "WorkOutActivity:";
     private MapView mapView;
@@ -94,6 +100,11 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
         final Button resumeButton = findViewById(R.id.resume_button);
         resumeButton.setVisibility(View.GONE);
 
+        tvAvgPace = findViewById(R.id.pace_value_textview);
+        tvCalories =findViewById(R.id.cal_value_textview);
+        tvDistance = findViewById(R.id.distance_value_textview);
+        tvVelocity = findViewById(R.id.velocity_value_textview);
+
         Bundle mapViewBundule = null;
         if (savedInstanceState != null) {
             mapViewBundule = savedInstanceState.getBundle(MAPS_API_KEY);
@@ -114,10 +125,30 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
     }
     @Override
     public void onLocationChanged(Location location) {
+        if(coordinates.size()>1)
+        {
+
+
+        }
         Log.i(TAG, "Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
         //set on map
         //googleMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("Me"));
         coordinates.add(new Coordinate(location.getLatitude(),location.getAltitude()));
+        if(coordinates.size()>1)
+        {
+            //calaculate distance by the last point and the new point
+            distance+=CalculationByDistance(new LatLng(coordinates.get(coordinates.size()-1).latitude,coordinates.get(coordinates.size()-1).longitude),new LatLng(location.getLatitude(),location.getLongitude()));
+            //display it
+            DecimalFormat df = new DecimalFormat("#.##");
+            String dx=df.format(distance/1000.0);
+            tvDistance.setText(String.valueOf(dx));
+        }
+
+    }
+
+    public double CalculationByDistance(LatLng startP, LatLng endP) {
+        return SphericalUtil.computeDistanceBetween(startP, endP);
+
     }
 
 
