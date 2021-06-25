@@ -33,8 +33,6 @@ import java.util.ArrayList;
             TextView tvDateValue= (TextView) convertView.findViewById(R.id.date_value_edit_text);
             TextView tvDistanceValue = (TextView) convertView.findViewById(R.id.distatnce_value_edit_text);
             TextView tvTimeValue = (TextView) convertView.findViewById(R.id.time_value_edit_text);
-            TextView tvCoordinateKey = (TextView) convertView.findViewById(R.id.coordinates_key_edit_text);
-            TextView tvCoordinateValue= (TextView) convertView.findViewById(R.id.coordinates_value_edit_text);
 
             // Populate the data into the template view using the data object
             tvDateKey.setText(workOutHistoryItem.dateKey);
@@ -43,8 +41,6 @@ import java.util.ArrayList;
             tvDateValue.setText(workOutHistoryItem.dateValue);
             tvDistanceValue.setText(workOutHistoryItem.distanceValue);
             tvTimeValue.setText(workOutHistoryItem.timeValue);
-            tvCoordinateKey.setText(workOutHistoryItem.coordinatesKey);
-            tvCoordinateValue.setText(workOutHistoryItem.coordinatesValue);
             // Return the completed view to render on screen
             return convertView;
         }
