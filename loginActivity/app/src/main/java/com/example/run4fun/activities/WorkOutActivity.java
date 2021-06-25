@@ -111,7 +111,7 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
 
         Bundle mapViewBundule = null;
         if (savedInstanceState != null) {
-            mapViewBundule = savedInstanceState.getBundle(MAPS_API_KEY);
+            mapViewBundule = savedInstanceState.getBundle(getString(R.string.google_map_key));
         }
         mapView = (MapView) findViewById(R.id.mapViewWorkOut);
         mapView.onCreate(mapViewBundule);
