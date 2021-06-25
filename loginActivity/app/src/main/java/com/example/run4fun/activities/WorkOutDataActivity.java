@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 import static com.example.run4fun.BuildConfig.MAPS_API_KEY;
 
-public class WorkOutDataAcvtivity extends AppCompatActivity implements OnMapReadyCallback {
+public class WorkOutDataActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     public static String DATE="date";
     public static String TIME="time";

@@ -51,7 +51,7 @@ public class WorkOutHistoryActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> listView, View itemView, int itemPosition, long itemId) {
                 //move date,time,distance,coordinates to WorkOutFinishActivity
-                Intent intent = new Intent(getBaseContext(), WorkOutDataAcvtivity.class);
+                Intent intent = new Intent(getBaseContext(), WorkOutDataActivity.class);
                 intent.putExtra(WorkOutFinishActivity.DATE,arrayOfWorkOutHistoryItems.get(itemPosition).dateValue);
                 intent.putExtra(WorkOutFinishActivity.TIME,arrayOfWorkOutHistoryItems.get(itemPosition).timeValue);
                 intent.putExtra(WorkOutFinishActivity.DISTANCE,arrayOfWorkOutHistoryItems.get(itemPosition).distanceValue);
