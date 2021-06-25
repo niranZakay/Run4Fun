@@ -1,13 +1,11 @@
 package com.example.run4fun.activities;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -15,17 +13,14 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.run4fun.Coordinate;
 import com.example.run4fun.R;
-import com.example.run4fun.db.DataAccess;
-import com.example.run4fun.db.WorkOutSchema;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -42,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import static com.example.run4fun.BuildConfig.MAPS_API_KEY;
 
@@ -49,6 +45,9 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
     // Number of seconds displayed
     // on the stopwatch.
     private int seconds = 0;
+
+    public static int KM_IN_METERS =1000;
+    public static int SEC_IN_MINUTE =60;
 
     // Is the stopwatch running?
     private boolean running;
@@ -59,11 +58,15 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
     private static String date;
     private static double distance=0;
     public static String time;
+    private static double velocity=0;
+    private static double avgPace=0;
+
     private static List<Coordinate> coordinates =new ArrayList<>();
     private TextView tvDistance;
     private TextView tvAvgPace;
     private TextView tvCalories;
     private TextView tvVelocity;
+    private TextView tvTimer;
 
     private static String TAG = "WorkOutActivity:";
     private MapView mapView;
@@ -104,6 +107,7 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
         tvCalories =findViewById(R.id.cal_value_textview);
         tvDistance = findViewById(R.id.distance_value_textview);
         tvVelocity = findViewById(R.id.velocity_value_textview);
+        tvTimer = findViewById(R.id.timer_textview);
 
         Bundle mapViewBundule = null;
         if (savedInstanceState != null) {
@@ -130,18 +134,50 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
 
 
         }
-        Log.i(TAG, "Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
+       Log.i(TAG, "Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
         //set on map
-        //googleMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("Me"));
-        coordinates.add(new Coordinate(location.getLatitude(),location.getAltitude()));
+        googleMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("Me"));
+        //set on map
+        float zoomLevel = 16.0f;
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), zoomLevel));
+        coordinates.add(new Coordinate(location.getLatitude(),location.getLongitude()));
         if(coordinates.size()>1)
         {
-            //calaculate distance by the last point and the new point
-            distance+=CalculationByDistance(new LatLng(coordinates.get(coordinates.size()-1).latitude,coordinates.get(coordinates.size()-1).longitude),new LatLng(location.getLatitude(),location.getLongitude()));
+            //calculate distance by the last point and the new point
+            distance+=CalculationByDistance(new LatLng(coordinates.get(coordinates.size()-2).latitude,coordinates.get(coordinates.size()-2).longitude),new LatLng(location.getLatitude(),location.getLongitude()))/ KM_IN_METERS;
             //display it
             DecimalFormat df = new DecimalFormat("#.##");
-            String dx=df.format(distance/1000.0);
-            tvDistance.setText(String.valueOf(dx));
+            String dx=df.format(distance);
+            tvDistance.setText(dx +" KM");
+
+            //calculate distance by distance and time (KM/h)
+            String currentTimeByView = tvTimer.getText().toString();
+            String[] arrayTimeer = currentTimeByView.split(":");
+            double minutes = Double.parseDouble(arrayTimeer[0]);
+            double seconds = Double.parseDouble(arrayTimeer[1]);
+            double totalSeconds = minutes*SEC_IN_MINUTE+seconds;
+            velocity = distance/totalSeconds;
+            if(velocity>0)
+            {
+                //display it
+                DecimalFormat dv = new DecimalFormat("#");
+                String formatVelocity=df.format(velocity);
+                tvVelocity.setText(formatVelocity + " KM/h");
+            }
+
+
+            //calculate Avg Pace by velocity
+            avgPace = KM_IN_METERS /velocity;
+            int sec = (int) (avgPace % 60);
+            int min = (int) ((avgPace / 60)%60);
+            tvAvgPace.setText(String.format("%02d:%02d", min, sec));
+
+            //calculate distance and age
+
+
+
+
+
         }
 
     }
@@ -253,8 +289,8 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
 
             public void run() {
 
-                int minutes = (seconds % 3600) / 60;
-                int secs = seconds % 60;
+                int minutes = (seconds % 3600) / SEC_IN_MINUTE;
+                int secs = seconds % SEC_IN_MINUTE;
 
                 // Format the seconds into hours, minutes,
                 // and seconds.
@@ -266,7 +302,6 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
 
                 // Set the text view text.
                 timeView.setText(time);
-
                 // If running is true, increment the
                 // seconds variable.
                 if (running) {
@@ -290,7 +325,12 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
         Intent intent = new Intent(getBaseContext(), WorkOutFinishActivity.class);
         intent.putExtra(WorkOutFinishActivity.DATE,date);
         intent.putExtra(WorkOutFinishActivity.TIME,time);
-        intent.putExtra(WorkOutFinishActivity.DISTANCE,distance);
+
+        //convert distance from double to string format
+        DecimalFormat df = new DecimalFormat("##.##");
+        String distanceFormat=df.format(distance/1000);
+        intent.putExtra(WorkOutFinishActivity.DISTANCE,distanceFormat);
+
         intent.putExtra(WorkOutFinishActivity.COORDINATES,jsonCoordinates);
         startActivity(intent);
         finish();
