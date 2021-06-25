@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="666aebf5-a0e2-49d8-8384-7f56e674c855" name="Default Changelist" comment="" />
+    <list default="true" id="666aebf5-a0e2-49d8-8384-7f56e674c855" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/loginActivity/app/src/main/java/com/example/run4fun/Coordinate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/loginActivity/app/src/main/java/com/example/run4fun/listeners/myLocationListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loginActivity/.idea/runConfigurations.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/loginActivity/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/loginActivity/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loginActivity/app/src/main/java/com/example/run4fun/WorkOut.java" beforeDir="false" afterPath="$PROJECT_DIR$/loginActivity/app/src/main/java/com/example/run4fun/WorkOut.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loginActivity/app/src/main/java/com/example/run4fun/activities/WorkOutActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/loginActivity/app/src/main/java/com/example/run4fun/activities/WorkOutActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loginActivity/app/src/main/java/com/example/run4fun/db/DataAccess.java" beforeDir="false" afterPath="$PROJECT_DIR$/loginActivity/app/src/main/java/com/example/run4fun/db/DataAccess.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loginActivity/app/src/main/java/com/example/run4fun/db/WorkOutSchema.java" beforeDir="false" afterPath="$PROJECT_DIR$/loginActivity/app/src/main/java/com/example/run4fun/db/WorkOutSchema.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,10 +48,10 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="493" y="73" key="FileChooserDialogImpl" timestamp="1623904249764">
+    <state x="493" y="73" key="FileChooserDialogImpl" timestamp="1624351409049">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="493" y="73" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1623904249764" />
+    <state x="493" y="73" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1624351409049" />
     <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1623566460397" />
   </component>
 </project>

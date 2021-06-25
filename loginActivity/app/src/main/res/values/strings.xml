@@ -4,7 +4,7 @@
     <string name="settings_text">Settings</string>
     <string name="activity_history_text">Activity History</string>
     <string name="start_activity_text">Start Activity!</string>
-    <string name="save_text">Save!</string>
+    <string name="save_text">Save</string>
     <string name="age_text">Age</string>
     <string name="height_text">Height</string>
     <string name="weight_text">Weight</string>
@@ -14,7 +14,7 @@
     <string name="please_enter_text">Please enter </string>
     <string name="work_out_history">Workout history</string>
     <string name="date_text">Date: </string>
-    <string name="distance_text">Distance</string>
+    <string name="distance_text">Distance:</string>
     <string name="time_text">Time: </string>
     <string name="velocity_text">Velocity: </string>
     <string name="stop_text">Stop </string>
@@ -27,10 +27,16 @@
     <string name="save_db_success_text">save workout in db was successfully! </string>
     <string name="save_db_failed_text">save workout in db was failed! </string>
     <string name="alert_before_finish_text">Are you sure you want to finish and save the workout?</string>
-    <string name="pace_text">Pace: </string>
     <string name="calories_text">Calories: </string>
     <string name="workouts_text">Workouts</string>
     <string name="pai_chart_title_text">Distance Graph</string>
     <string name="bar_chart_title_text">Calories Graph</string>
     <string name="month_text">Month</string>
+    <string name="google_map_key">AIzaSyAkrr5osbGCAKg5TXAxUGcWDaOWxvXh9Kk</string>
+    <string name="coordinates_text">Coordinates:</string>
+    <string name="discard_text">Discard</string>
+    <string name="summary_text">Summary</string>
+    <string name="alert_before_discard_text">are you sure you want to discard? (the workout will delete)</string>
+    <string name="workout_data_text">WorkOut Data</string>
+    <string name="avg_pace_text">Avg. Pace:</string>
 </resources>

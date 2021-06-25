@@ -114,14 +114,14 @@
                     android:id="@+id/pace_key_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/pace_text"
+                    android:text="@string/avg_pace_text"
                     android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/pace_value_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0 KM/h"
+                    android:text="0:00"
                     android:textSize="20sp" />
 
             </LinearLayout>
@@ -134,7 +134,7 @@
             android:orientation="vertical">
 
             <com.google.android.gms.maps.MapView
-                android:id="@+id/mapView2"
+                android:id="@+id/mapViewWorkOut"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>

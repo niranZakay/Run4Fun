@@ -1,58 +1,77 @@
 package com.example.run4fun.activities;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.run4fun.Coordinate;
 import com.example.run4fun.R;
-import com.example.run4fun.WorkOut;
-import com.example.run4fun.db.DataAccess;
-import com.example.run4fun.db.WorkOutSchema;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
+import com.google.maps.android.SphericalUtil;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import static com.example.run4fun.BuildConfig.MAPS_API_KEY;
 
-public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCallback,LocationListener{
     // Number of seconds displayed
     // on the stopwatch.
     private int seconds = 0;
+
+    public static int KM_IN_METERS =1000;
+    public static int SEC_IN_MINUTE =60;
 
     // Is the stopwatch running?
     private boolean running;
 
     private boolean wasRunning;
 
-    private static String date = "date";
-    private static String distance = "distance";
-    private static String time = "time";
+    //for WorkOut instance
+    private static String date;
+    private static double distance=0;
+    public static String time;
+    private static double velocity=0;
+    private static double avgPace=0;
+
+    private static List<Coordinate> coordinates =new ArrayList<>();
+    private TextView tvDistance;
+    private TextView tvAvgPace;
+    private TextView tvCalories;
+    private TextView tvVelocity;
+    private TextView tvTimer;
 
     private static String TAG = "WorkOutActivity:";
     private MapView mapView;
+    private GoogleMap googleMap;
+    private LocationManager locationManager;
 
 
     @Override
@@ -84,15 +103,90 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
         final Button resumeButton = findViewById(R.id.resume_button);
         resumeButton.setVisibility(View.GONE);
 
+        tvAvgPace = findViewById(R.id.pace_value_textview);
+        tvCalories =findViewById(R.id.cal_value_textview);
+        tvDistance = findViewById(R.id.distance_value_textview);
+        tvVelocity = findViewById(R.id.velocity_value_textview);
+        tvTimer = findViewById(R.id.timer_textview);
+
         Bundle mapViewBundule = null;
         if (savedInstanceState != null) {
             mapViewBundule = savedInstanceState.getBundle(MAPS_API_KEY);
         }
-        mapView = (MapView) findViewById(R.id.mapView2);
+        mapView = (MapView) findViewById(R.id.mapViewWorkOut);
         mapView.onCreate(mapViewBundule);
         mapView.getMapAsync(this);
+        locationManager = (LocationManager)
+                getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
+        //get current date
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+        date = sdf.format(new Date());
+    }
+    @Override
+    public void onLocationChanged(Location location) {
+        if(coordinates.size()>1)
+        {
+
+
+        }
+       Log.i(TAG, "Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
+        //set on map
+        googleMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("Me"));
+        //set on map
+        float zoomLevel = 16.0f;
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), zoomLevel));
+        coordinates.add(new Coordinate(location.getLatitude(),location.getLongitude()));
+        if(coordinates.size()>1)
+        {
+            //calculate distance by the last point and the new point
+            distance+=CalculationByDistance(new LatLng(coordinates.get(coordinates.size()-2).latitude,coordinates.get(coordinates.size()-2).longitude),new LatLng(location.getLatitude(),location.getLongitude()))/ KM_IN_METERS;
+            //display it
+            DecimalFormat df = new DecimalFormat("#.##");
+            String dx=df.format(distance);
+            tvDistance.setText(dx +" KM");
+
+            //calculate distance by distance and time (KM/h)
+            String currentTimeByView = tvTimer.getText().toString();
+            String[] arrayTimeer = currentTimeByView.split(":");
+            double minutes = Double.parseDouble(arrayTimeer[0]);
+            double seconds = Double.parseDouble(arrayTimeer[1]);
+            double totalSeconds = minutes*SEC_IN_MINUTE+seconds;
+            velocity = distance/totalSeconds;
+            if(velocity>0)
+            {
+                //display it
+                DecimalFormat dv = new DecimalFormat("#");
+                String formatVelocity=df.format(velocity);
+                tvVelocity.setText(formatVelocity + " KM/h");
+            }
+
+
+            //calculate Avg Pace by velocity
+            avgPace = KM_IN_METERS /velocity;
+            int sec = (int) (avgPace % 60);
+            int min = (int) ((avgPace / 60)%60);
+            tvAvgPace.setText(String.format("%02d:%02d", min, sec));
+
+            //calculate distance and age
+
+
+
+
+
+        }
 
     }
+
+    public double CalculationByDistance(LatLng startP, LatLng endP) {
+        return SphericalUtil.computeDistanceBetween(startP, endP);
+
+    }
+
 
     @Override
     public void onSaveInstanceState(
@@ -113,7 +207,9 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
         super.onPause();
         wasRunning = running;
         running = false;
+        mapView.onPause();
     }
+
 
     // If the activity is resumed,
     // start the stopwatch
@@ -193,8 +289,8 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
 
             public void run() {
 
-                int minutes = (seconds % 3600) / 60;
-                int secs = seconds % 60;
+                int minutes = (seconds % 3600) / SEC_IN_MINUTE;
+                int secs = seconds % SEC_IN_MINUTE;
 
                 // Format the seconds into hours, minutes,
                 // and seconds.
@@ -206,7 +302,6 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
 
                 // Set the text view text.
                 timeView.setText(time);
-
                 // If running is true, increment the
                 // seconds variable.
                 if (running) {
@@ -222,55 +317,34 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
 
     public void createAlertBeforeFinish() {
 
-        //make vibration
-        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(300);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        String jsonCoordinates =  new Gson().toJson(coordinates);
+        TextView timerTextView = (TextView)findViewById(R.id.timer_textview);
+        time = timerTextView.getText().toString();
 
-        builder.setTitle(getString(R.string.alert_text));
-        builder.setMessage(getString(R.string.alert_before_finish_text));
+        //move date,time,distance,coordinates to WorkOutFinishActivity
+        Intent intent = new Intent(getBaseContext(), WorkOutFinishActivity.class);
+        intent.putExtra(WorkOutFinishActivity.DATE,date);
+        intent.putExtra(WorkOutFinishActivity.TIME,time);
 
-        builder.setPositiveButton(getString(R.string.yes_text), new DialogInterface.OnClickListener() {
+        //convert distance from double to string format
+        DecimalFormat df = new DecimalFormat("##.##");
+        String distanceFormat=df.format(distance/1000);
+        intent.putExtra(WorkOutFinishActivity.DISTANCE,distanceFormat);
 
-            public void onClick(DialogInterface dialog, int which) {
-                //save the workout in db sqlite
-                DataAccess dataAccess = DataAccess.DataAccess(getApplicationContext(), WorkOutSchema.databaseName);
-                boolean result = dataAccess.addWorkOut(date, distance, time);
-                if (result) {
-                    //save success
-                    Log.i(TAG, "db save results: successfully");
-                    Toast.makeText(getApplicationContext(), getString(R.string.save_db_success_text), Toast.LENGTH_SHORT).show();
+        intent.putExtra(WorkOutFinishActivity.COORDINATES,jsonCoordinates);
+        startActivity(intent);
+        finish();
 
-                } else {
-                    //save failed
-                    Log.i(TAG, "db save results: failed");
-                    Toast.makeText(getApplicationContext(), getString(R.string.save_db_failed_text), Toast.LENGTH_SHORT).show();
-                }
+        //stop get location
+        locationManager.removeUpdates(this);
+        locationManager = null;
 
 
-                //back to main activity
-                finish();
-                dialog.dismiss();
-            }
-        });
-
-        builder.setNegativeButton(getString(R.string.no_text), new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                // Do nothing
-                dialog.dismiss();
-            }
-        });
-
-        AlertDialog alert = builder.create();
-        alert.show();
     }
 
     @Override
     public void onMapReady(@NonNull @NotNull GoogleMap googleMap) {
-        googleMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        this.googleMap = googleMap;
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -281,7 +355,7 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        googleMap.setMyLocationEnabled(true);
+        this.googleMap.setMyLocationEnabled(true);
     }
 
     @Override
