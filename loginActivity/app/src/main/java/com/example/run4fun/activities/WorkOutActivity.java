@@ -111,7 +111,7 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
 
         Bundle mapViewBundule = null;
         if (savedInstanceState != null) {
-            mapViewBundule = savedInstanceState.getBundle(MAPS_API_KEY);
+            mapViewBundule = savedInstanceState.getBundle(getString(R.string.google_map_key));
         }
         mapView = (MapView) findViewById(R.id.mapViewWorkOut);
         mapView.onCreate(mapViewBundule);
@@ -129,15 +129,11 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
     }
     @Override
     public void onLocationChanged(Location location) {
-        if(coordinates.size()>1)
-        {
 
-
-        }
        Log.i(TAG, "Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
         //set on map
         googleMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("Me"));
-        //set on map
+        //zoom it
         float zoomLevel = 16.0f;
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), zoomLevel));
         coordinates.add(new Coordinate(location.getLatitude(),location.getLongitude()));
@@ -173,6 +169,7 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
             tvAvgPace.setText(String.format("%02d:%02d", min, sec));
 
             //calculate distance and age
+
 
 
 

@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.example.run4fun.Coordinate;
 import com.example.run4fun.R;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -25,7 +26,7 @@ import java.util.ArrayList;
 
 import static com.example.run4fun.BuildConfig.MAPS_API_KEY;
 
-public class WorkOutDataAcvtivity extends AppCompatActivity implements OnMapReadyCallback {
+public class WorkOutDataActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     public static String DATE="date";
     public static String TIME="time";
@@ -116,6 +117,8 @@ public class WorkOutDataAcvtivity extends AppCompatActivity implements OnMapRead
                 options.title("Me");
                 options.snippet("someDesc");
                 googleMap.addMarker(options);
+                float zoomLevel = 16.0f;
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, zoomLevel));
             }
 
         }
