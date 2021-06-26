@@ -39,6 +39,7 @@ import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import static com.example.run4fun.BuildConfig.MAPS_API_KEY;
@@ -75,11 +76,19 @@ public class WorkOutFinishActivity extends AppCompatActivity implements OnMapRea
         TextView tvDate = findViewById(R.id.date_value_edit_finish_text);
         TextView tvTime = findViewById(R.id.time_value_edit_finish_text);
         TextView tvDistance = findViewById(R.id.distatnce_value_edit_finish_text);
-
+        TextView tvCalories = findViewById(R.id.calories_value_edit_finish_text);
+        TextView tvAvg = findViewById(R.id.avg_value_edit_finish_text);
         //set data to labels
         tvDate.setText(date);
         tvTime.setText(time);
         tvDistance.setText(distance+ " KM");
+
+        DecimalFormat df= new DecimalFormat("#");
+        String caloriesFormat=df.format(Double.parseDouble(calories));
+        tvCalories.setText(caloriesFormat);
+
+        tvAvg.setText(avgPace);
+
 
 
         Button saveButton = findViewById(R.id.save_button);
@@ -114,7 +123,7 @@ public class WorkOutFinishActivity extends AppCompatActivity implements OnMapRea
 
 
                         //for test only######
-                        testing(dataAccess);
+//                        testing(dataAccess);
 
 
 
@@ -243,6 +252,7 @@ public class WorkOutFinishActivity extends AppCompatActivity implements OnMapRea
     protected void onStop() {
         super.onStop();
         mapView.onStop();
+        mapView.removeAllViewsInLayout();
     }
 
     @Override

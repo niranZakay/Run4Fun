@@ -15,12 +15,14 @@
             android:id="@+id/imageView2"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:padding="10sp"
             app:srcCompat="@drawable/run4funicon" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="10sp">
 
             <TextView
                 android:id="@+id/hello_textview"
@@ -36,6 +38,7 @@
                 android:id="@+id/statistical_analyze_button"
                 android:layout_width="match_parent"
                 android:layout_height="80sp"
+                android:autoText="true"
                 android:text="@string/statistical_analyze_text"
                 android:textSize="20sp"
                 app:icon="@android:drawable/ic_menu_sort_by_size"
@@ -69,6 +72,8 @@
                     android:id="@+id/start_activity_button"
                     android:layout_width="match_parent"
                     android:layout_height="100sp"
+                    android:background="@drawable/button"
+                    android:backgroundTint="#F50707"
                     android:text="@string/start_activity_text"
                     android:textSize="25sp"
                     app:icon="@android:drawable/ic_menu_send"

@@ -16,51 +16,35 @@
             android:id="@+id/timer_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/boarder"
+            android:background="@drawable/button"
+            android:backgroundTint="#4EA8B3F9"
             android:gravity="center"
-            android:text="00:00:00"
-            android:textSize="60sp" />
+            android:text="00:00"
+            android:textSize="80sp" />
 
-        <LinearLayout
+        <GridLayout
+            android:id="@+id/gridLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:columnCount="1"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="5sp">
+            android:rowCount="2">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginRight="15sp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/velocity_key_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/velocity_text"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/velocity_value_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0 KM/h"
-                    android:textSize="20sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_margin="5sp"
+                android:background="@drawable/button"
+                android:backgroundTint="#23000000"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/distance_key_textview"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="25sp"
+                    android:layout_gravity="center"
                     android:layout_weight="1"
                     android:text="@string/distance_text"
                     android:textSize="20sp"
@@ -68,33 +52,31 @@
 
                 <TextView
                     android:id="@+id/distance_value_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="60sp"
+                    android:gravity="center"
                     android:text="0 KM"
-                    android:textSize="20sp" />
+                    android:textSize="40sp"
+                    android:textStyle="normal" />
 
 
             </LinearLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="5sp">
-
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="5sp"
                 android:layout_marginRight="15sp"
-                android:orientation="horizontal">
+                android:background="@drawable/button"
+                android:backgroundTint="#23000000"
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/cal_key_textview"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="25sp"
+                    android:layout_gravity="center"
                     android:text="@string/calories_text"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -102,22 +84,28 @@
                 <TextView
                     android:id="@+id/cal_value_textview"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60sp"
                     android:text="0"
-                    android:textSize="20sp" />
+                    android:textSize="40sp"
+                    android:textStyle="normal" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="5sp"
                 android:layout_marginRight="15sp"
-                android:orientation="horizontal">
+                android:background="@drawable/button"
+                android:backgroundTint="#23000000"
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/pace_key_textview"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="25sp"
+                    android:layout_gravity="center"
                     android:text="@string/avg_pace_text"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -125,30 +113,22 @@
                 <TextView
                     android:id="@+id/pace_value_textview"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60sp"
                     android:text="0:00"
-                    android:textSize="20sp" />
+                    android:textSize="40sp"
+                    android:textStyle="normal" />
 
             </LinearLayout>
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="275dp"
-            android:background="@drawable/boarder"
-            android:orientation="vertical">
+        </GridLayout>
 
-            <com.google.android.gms.maps.MapView
-                android:id="@+id/mapViewWorkOut"
-                android:layout_width="match_parent"
-                android:layout_height="275dp" />
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="bottom"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="10sp">
 
             <Button
                 android:id="@+id/pause_button"
