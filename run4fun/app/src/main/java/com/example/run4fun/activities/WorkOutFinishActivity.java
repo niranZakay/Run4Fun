@@ -39,6 +39,7 @@ import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import static com.example.run4fun.BuildConfig.MAPS_API_KEY;
@@ -75,11 +76,19 @@ public class WorkOutFinishActivity extends AppCompatActivity implements OnMapRea
         TextView tvDate = findViewById(R.id.date_value_edit_finish_text);
         TextView tvTime = findViewById(R.id.time_value_edit_finish_text);
         TextView tvDistance = findViewById(R.id.distatnce_value_edit_finish_text);
-
+        TextView tvCalories = findViewById(R.id.calories_value_edit_finish_text);
+        TextView tvAvg = findViewById(R.id.avg_value_edit_finish_text);
         //set data to labels
         tvDate.setText(date);
         tvTime.setText(time);
         tvDistance.setText(distance+ " KM");
+
+        DecimalFormat df= new DecimalFormat("#");
+        String caloriesFormat=df.format(Double.parseDouble(calories));
+        tvCalories.setText(caloriesFormat);
+
+        tvAvg.setText(avgPace);
+
 
 
         Button saveButton = findViewById(R.id.save_button);
@@ -243,6 +252,7 @@ public class WorkOutFinishActivity extends AppCompatActivity implements OnMapRea
     protected void onStop() {
         super.onStop();
         mapView.onStop();
+        mapView.removeAllViewsInLayout();
     }
 
     @Override
@@ -253,8 +263,11 @@ public class WorkOutFinishActivity extends AppCompatActivity implements OnMapRea
 
     public void testing(DataAccess dataAccess)
     {
-        dataAccess.addWorkOutTesting("26-04-2021","100","1:35"," ","187","5:40");
-        dataAccess.addWorkOutTesting("26-03-2021","50","1:35"," ","100","5:40");
-        dataAccess.addWorkOutTesting("26-01-2021","12","2:35"," ","190","5:42");
+        dataAccess.addWorkOutTesting("26-04-2021 15:22:40","7","1:35"," ","187","5:40");
+        dataAccess.addWorkOutTesting("26-03-2021 11:22:40","6","6:35"," ","127","4:40");
+        dataAccess.addWorkOutTesting("26-03-2021 12:22:40","12","1:35"," ","100","5:40");
+        dataAccess.addWorkOutTesting("26-01-2021 15:21:40","12","4:35"," ","190","3:42");
+        dataAccess.addWorkOutTesting("26-02-2021 07:21:40" ,"12","8:35"," ","150","5:42");
+        dataAccess.addWorkOutTesting("26-03-2021 08:21:40","12","2:35"," ","190","5:42");
     }
 }

@@ -46,4 +46,10 @@
     <string name="other_text">Other</string>
     <string name="calories_graph_text">Calories Graph</string>
     <string name="distance_graph_text">Distance Graph</string>
+    <string name="alert_before_stop_text">Are you sure you want to stop the the workout?</string>
+    <string name="gps_network_not_enabled">the network is not enable</string>
+    <string name="open_location_settings">open location settings</string>
+    <string name="alarm_text">dont forget to training today!!!</string>
+    <string name="service_name">LocationService</string>
+    <string name="service_status_monitor">running...</string>
 </resources>

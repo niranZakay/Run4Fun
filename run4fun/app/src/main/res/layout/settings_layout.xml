@@ -14,13 +14,14 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10sp"
             android:text="Key"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/value_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Value"
-            android:textSize="15sp" />
+            android:textSize="18sp" />
     </LinearLayout>
 </LinearLayout>

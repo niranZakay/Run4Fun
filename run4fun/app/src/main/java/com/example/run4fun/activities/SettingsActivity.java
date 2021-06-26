@@ -44,7 +44,7 @@ public class SettingsActivity extends AppCompatActivity {
         arrayOfSettingItem.add(new SettingItem(getString(R.string.height_text),Pref.getValue(this,"height", "175")));
         arrayOfSettingItem.add(new SettingItem(getString(R.string.weight_text),Pref.getValue(this,"weight", "70")));
         arrayOfSettingItem.add(new SettingItem(getString(R.string.age_text),Pref.getValue(this,"age", "24")));
-        arrayOfSettingItem.add(new SettingItem(getString(R.string.bmr_text),Pref.getValue(this,"bmr", "24")));
+        arrayOfSettingItem.add(new SettingItem(getString(R.string.bmr_text),Pref.getValue(this,"bmr", "0")));
         // Create the adapter to convert the array to views
         SettingsAdapter adapter = new SettingsAdapter(this, arrayOfSettingItem);
         // Attach the adapter to a ListView

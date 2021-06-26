@@ -15,12 +15,14 @@
             android:id="@+id/imageView2"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:padding="10sp"
             app:srcCompat="@drawable/run4funicon" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="10sp">
 
             <TextView
                 android:id="@+id/hello_textview"
@@ -29,28 +31,36 @@
                 android:layout_marginBottom="10sp"
                 android:gravity="center"
                 android:text="Hello, User"
-                android:textSize="20sp" />
+                android:textSize="25sp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/statistical_analyze_button"
                 android:layout_width="match_parent"
-                android:layout_height="55sp"
+                android:layout_height="80sp"
+                android:autoText="true"
                 android:text="@string/statistical_analyze_text"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                app:icon="@android:drawable/ic_menu_sort_by_size"
+                app:iconGravity="textStart" />
 
             <Button
                 android:id="@+id/settings_button"
                 android:layout_width="match_parent"
-                android:layout_height="55sp"
+                android:layout_height="80sp"
                 android:text="@string/settings_text"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                app:icon="@android:drawable/ic_menu_preferences"
+                app:iconGravity="textStart" />
 
             <Button
                 android:id="@+id/acitivity_history_button"
                 android:layout_width="match_parent"
-                android:layout_height="55sp"
+                android:layout_height="80sp"
                 android:text="@string/activity_history_text"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                app:icon="@android:drawable/ic_menu_agenda"
+                app:iconGravity="textStart" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -61,9 +71,13 @@
                 <Button
                     android:id="@+id/start_activity_button"
                     android:layout_width="match_parent"
-                    android:layout_height="80sp"
+                    android:layout_height="100sp"
+                    android:background="@drawable/button"
+                    android:backgroundTint="#F50707"
                     android:text="@string/start_activity_text"
                     android:textSize="25sp"
+                    app:icon="@android:drawable/ic_menu_send"
+                    app:iconGravity="textStart"
                     tools:layout_editor_absoluteX="16dp"
                     tools:layout_editor_absoluteY="541dp" />
             </LinearLayout>
