@@ -175,7 +175,7 @@
                 android:id="@+id/stop_button"
                 android:layout_width="match_parent"
                 android:layout_height="80sp"
-                android:onClick="onClickFinish"
+                android:onClick="onClickStop"
                 android:text="@string/stop_text"
                 android:textSize="25sp"
                 android:textStyle="bold"

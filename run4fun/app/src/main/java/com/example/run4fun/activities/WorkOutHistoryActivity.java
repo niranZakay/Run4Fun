@@ -37,7 +37,7 @@ public class WorkOutHistoryActivity extends AppCompatActivity {
 
         for (WorkOut workout:workOuts)
         {
-            arrayOfWorkOutHistoryItems.add(new WorkOutHistoryItem(getString(R.string.date_text), workout.date,getString(R.string.distance_text),workout.distance,getString(R.string.time_text),workout.time,getString(R.string.coordinates_text),workout.coordinates));
+            arrayOfWorkOutHistoryItems.add(new WorkOutHistoryItem(getString(R.string.date_text), workout.date,getString(R.string.distance_text),workout.distance,getString(R.string.time_text),workout.time,getString(R.string.calories_text),workout.calories,getString(R.string.avg_pace_text),workout.avg,getString(R.string.coordinates_text),workout.coordinates));
         }
 
         // Create the adapter to convert the array to views
@@ -55,6 +55,8 @@ public class WorkOutHistoryActivity extends AppCompatActivity {
                 intent.putExtra(WorkOutFinishActivity.DATE,arrayOfWorkOutHistoryItems.get(itemPosition).dateValue);
                 intent.putExtra(WorkOutFinishActivity.TIME,arrayOfWorkOutHistoryItems.get(itemPosition).timeValue);
                 intent.putExtra(WorkOutFinishActivity.DISTANCE,arrayOfWorkOutHistoryItems.get(itemPosition).distanceValue);
+                intent.putExtra(WorkOutFinishActivity.CALORIES,arrayOfWorkOutHistoryItems.get(itemPosition).caloriesValue);
+                intent.putExtra(WorkOutFinishActivity.AVG_PACE,arrayOfWorkOutHistoryItems.get(itemPosition).avgPaceValue);
                 intent.putExtra(WorkOutFinishActivity.COORDINATES,arrayOfWorkOutHistoryItems.get(itemPosition).coordinatesValue);
                 startActivity(intent);
             }

@@ -1,11 +1,13 @@
 package com.example.run4fun.activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -13,13 +15,17 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.run4fun.Coordinate;
 import com.example.run4fun.R;
+import com.example.run4fun.db.DataAccess;
+import com.example.run4fun.db.WorkOutSchema;
 import com.example.run4fun.util.Pref;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -64,8 +70,10 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
     private static double distance=0;
     public static String time;
     private static double velocity=0;
-    private static double avgPace=0;
+    private static String avgPace="00:00";
     private static double calories=0;
+
+    boolean pasueIsOn = false;
 
     private static List<Coordinate> coordinates =new ArrayList<>();
     private TextView tvDistance;
@@ -136,62 +144,59 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
     @Override
     public void onLocationChanged(Location location) {
 
-       Log.i(TAG, "Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
+        if(running) {
+            Log.i(TAG, "Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
 //        //set on map
 //        googleMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("Me"));
 
-        // Instantiates a new Polyline object and adds points to define a rectangle
-        PolylineOptions polylineOptions = new PolylineOptions()
-                .add(new LatLng(location.getLatitude(), location.getLongitude()));//
-        // Get back the mutable Polyline
-        Polyline polyline = googleMap.addPolyline(polylineOptions);
-        //zoom it
-        float zoomLevel = 16.0f;
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), zoomLevel));
-        coordinates.add(new Coordinate(location.getLatitude(),location.getLongitude()));
-        if(coordinates.size()>1)
-        {
-            //calculate distance by the last point and the new point
-            distance+=CalculationByDistance(new LatLng(coordinates.get(coordinates.size()-2).latitude,coordinates.get(coordinates.size()-2).longitude),new LatLng(location.getLatitude(),location.getLongitude()))/ KM_IN_METERS;
-            //display it
-            DecimalFormat df = new DecimalFormat("#.##");
-            String dx=df.format(distance);
-            tvDistance.setText(dx +" KM");
-
-            //calculate distance by distance and time (KM/h)
-            String currentTimeByView = tvTimer.getText().toString();
-            String[] arrayTimeer = currentTimeByView.split(":");
-            double minutes = Double.parseDouble(arrayTimeer[0]);
-            double seconds = Double.parseDouble(arrayTimeer[1]);
-            double totalSeconds = minutes*SEC_IN_MINUTE+seconds;
-            velocity = distance/totalSeconds;
-            if(velocity>0)
-            {
+            // Instantiates a new Polyline object and adds points to define a rectangle
+            PolylineOptions polylineOptions = new PolylineOptions()
+                    .add(new LatLng(location.getLatitude(), location.getLongitude()));//
+            // Get back the mutable Polyline
+            Polyline polyline = googleMap.addPolyline(polylineOptions);
+            //zoom it
+            float zoomLevel = 16.0f;
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), zoomLevel));
+            coordinates.add(new Coordinate(location.getLatitude(), location.getLongitude()));
+            if (coordinates.size() > 1) {
+                //calculate distance by the last point and the new point
+                distance += CalculationByDistance(new LatLng(coordinates.get(coordinates.size() - 2).latitude, coordinates.get(coordinates.size() - 2).longitude), new LatLng(location.getLatitude(), location.getLongitude())) / KM_IN_METERS;
                 //display it
-                DecimalFormat dv = new DecimalFormat("#");
-                String formatVelocity=df.format(velocity);
-                tvVelocity.setText(formatVelocity + " KM/h");
+                DecimalFormat df = new DecimalFormat("#.##");
+                String dx = df.format(distance);
+                tvDistance.setText(dx + " KM");
+
+                //calculate distance by distance and time (KM/h)
+                String currentTimeByView = tvTimer.getText().toString();
+                String[] arrayTimeer = currentTimeByView.split(":");
+                double minutes = Double.parseDouble(arrayTimeer[0]);
+                double seconds = Double.parseDouble(arrayTimeer[1]);
+                double totalSeconds = minutes * SEC_IN_MINUTE + seconds;
+                velocity = distance / totalSeconds;
+                if (velocity > 0) {
+                    //display it
+                    DecimalFormat dv = new DecimalFormat("#");
+                    String formatVelocity = df.format(velocity);
+                    tvVelocity.setText(formatVelocity + " KM/h");
+                }
+
+
+                //calculate Avg Pace by velocity
+                double avgPace = KM_IN_METERS / velocity;
+                int sec = (int) (avgPace % 60);
+                int min = (int) ((avgPace / 60) % 60);
+                tvAvgPace.setText(String.format("%02d:%02d", min, sec));
+                this.avgPace = String.format("%02d:%02d", min, sec);
+
+                //calculate calories by weight minutes and const
+                double weight = Double.parseDouble(Pref.getValue(this, "weight", "80"));
+                calories = RUN_CONST * weight * (totalSeconds / 60);
+                DecimalFormat dc = new DecimalFormat("#");
+                String formatCalories = dc.format(calories);
+                tvCalories.setText(String.valueOf(formatCalories));
+
+
             }
-
-
-            //calculate Avg Pace by velocity
-            avgPace = KM_IN_METERS /velocity;
-            int sec = (int) (avgPace % 60);
-            int min = (int) ((avgPace / 60)%60);
-            tvAvgPace.setText(String.format("%02d:%02d", min, sec));
-
-            //calculate calories by weight minutes and const
-            double weight= Double.parseDouble(Pref.getValue(this,"weight","80"));
-            calories = RUN_CONST*weight*(totalSeconds/60);
-            DecimalFormat dc = new DecimalFormat("#");
-            String formatCalories=dc.format(calories);
-            tvCalories.setText(String.valueOf(formatCalories));
-
-
-
-
-
-
         }
 
     }
@@ -232,6 +237,7 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
     // again if it was running previously.
     @Override
     protected void onResume() {
+        pasueIsOn = false;
         super.onResume();
         if (wasRunning) {
             running = true;
@@ -266,8 +272,8 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
         running = true;
     }
 
-    public void onClickFinish(View view) {
-        createAlertBeforeFinish();
+    public void onClickStop(View view) {
+        createAlertBeforStop();
     }
 
     // Reset the stopwatch when
@@ -284,6 +290,7 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
     // to increment the seconds and
     // update the text view.
     private void runTimer() {
+
         running = true;
         // Get the text view.
         final TextView timeView
@@ -305,59 +312,90 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
 
             public void run() {
 
-                int minutes = (seconds % 3600) / SEC_IN_MINUTE;
-                int secs = seconds % SEC_IN_MINUTE;
+                    int minutes = (seconds % 3600) / SEC_IN_MINUTE;
+                    int secs = seconds % SEC_IN_MINUTE;
 
-                // Format the seconds into hours, minutes,
-                // and seconds.
-                String time
-                        = String
-                        .format(Locale.getDefault(),
-                                "%02d:%02d",
-                                minutes, secs);
+                    // Format the seconds into hours, minutes,
+                    // and seconds.
+                    String time
+                            = String
+                            .format(Locale.getDefault(),
+                                    "%02d:%02d",
+                                    minutes, secs);
 
-                // Set the text view text.
-                timeView.setText(time);
-                // If running is true, increment the
-                // seconds variable.
-                if (running) {
-                    seconds++;
+                    // Set the text view text.
+                    timeView.setText(time);
+                    // If running is true, increment the
+                    // seconds variable.
+                    if (running) {
+                        seconds++;
+                    }
+
+                    // Post the code again
+                    // with a delay of 1 second.
+                    handler.postDelayed(this, 1000);
                 }
 
-                // Post the code again
-                // with a delay of 1 second.
-                handler.postDelayed(this, 1000);
-            }
         });
+
     }
 
-    public void createAlertBeforeFinish() {
 
-        String jsonCoordinates =  new Gson().toJson(coordinates);
-        TextView timerTextView = (TextView)findViewById(R.id.timer_textview);
-        time = timerTextView.getText().toString();
+    public void createAlertBeforStop()
+    {
+        //make vibration
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(300);
+        AlertDialog.Builder builder = new AlertDialog.Builder(WorkOutActivity.this);
 
-        //move date,time,distance,coordinates to WorkOutFinishActivity
-        Intent intent = new Intent(getBaseContext(), WorkOutFinishActivity.class);
-        intent.putExtra(WorkOutFinishActivity.DATE,date);
-        intent.putExtra(WorkOutFinishActivity.TIME,time);
-        intent.putExtra(WorkOutFinishActivity.CALORIES,String.valueOf(calories));
-        intent.putExtra(WorkOutFinishActivity.AVG_PACE,String.valueOf(avgPace));
+        builder.setTitle(getString(R.string.alert_text));
+        builder.setMessage(getString(R.string.alert_before_stop_text));
 
-        //convert distance from double to string format
-        DecimalFormat df = new DecimalFormat("##.##");
-        String distanceFormat=df.format(distance/1000);
-        intent.putExtra(WorkOutFinishActivity.DISTANCE,distanceFormat);
+        builder.setPositiveButton(getString(R.string.yes_text), new DialogInterface.OnClickListener() {
 
-        intent.putExtra(WorkOutFinishActivity.COORDINATES,jsonCoordinates);
-        startActivity(intent);
-        finish();
+            public void onClick(DialogInterface dialog, int which) {
 
-        //stop get location
-        locationManager.removeUpdates(this);
-        locationManager = null;
+                String jsonCoordinates =  new Gson().toJson(coordinates);
+                TextView timerTextView = (TextView)findViewById(R.id.timer_textview);
+                time = timerTextView.getText().toString();
 
+                //move date,time,distance,coordinates to WorkOutFinishActivity
+                Intent intent = new Intent(getBaseContext(), WorkOutFinishActivity.class);
+                intent.putExtra(WorkOutFinishActivity.DATE,date);
+                intent.putExtra(WorkOutFinishActivity.TIME,time);
+                intent.putExtra(WorkOutFinishActivity.CALORIES,String.valueOf(calories));
+                intent.putExtra(WorkOutFinishActivity.AVG_PACE,avgPace);
 
+                //convert distance from double to string format
+                DecimalFormat df = new DecimalFormat("##.##");
+                String distanceFormat=df.format(distance);
+                intent.putExtra(WorkOutFinishActivity.DISTANCE,distanceFormat);
+
+                intent.putExtra(WorkOutFinishActivity.COORDINATES,jsonCoordinates);
+                startActivity(intent);
+                finish();
+
+                //stop get location
+                locationManager.removeUpdates(WorkOutActivity.this);
+                locationManager = null;
+
+                finish();
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton(getString(R.string.no_text), new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                // Do nothing
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     @Override

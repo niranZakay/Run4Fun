@@ -14,9 +14,13 @@ public class WorkOutHistoryItem {
     public String timeValue;
     public String coordinatesKey;
     public String coordinatesValue;
+    public String avgPaceKey;
+    public String avgPaceValue;
+    public String caloriesKey;
+    public String caloriesValue;
 
 
-    public WorkOutHistoryItem(String dateKey, String dateValue , String distanceKey, String distanceValue, String timeKey , String timeValue, String coordinatesKey,String coordinatesValue)
+    public WorkOutHistoryItem(String dateKey, String dateValue , String distanceKey, String distanceValue, String timeKey , String timeValue,String caloriesKey,String caloriesValue,String avgPaceKey,String avgPaceValue ,String coordinatesKey,String coordinatesValue)
     {
         this.dateKey = dateKey;
         this.dateValue= dateValue;
@@ -26,5 +30,9 @@ public class WorkOutHistoryItem {
         this.timeValue = timeValue;
         this.coordinatesKey = coordinatesKey;
         this.coordinatesValue = coordinatesValue;
+        this.caloriesKey = caloriesKey;
+        this.caloriesValue =caloriesValue;
+        this.avgPaceKey = avgPaceKey;
+        this.avgPaceValue = avgPaceValue;
     }
 }

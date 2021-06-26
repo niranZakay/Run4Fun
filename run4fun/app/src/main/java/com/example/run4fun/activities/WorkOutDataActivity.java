@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.example.run4fun.Coordinate;
 import com.example.run4fun.R;
+import com.example.run4fun.WorkOut;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -24,25 +25,26 @@ import android.widget.TextView;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import static com.example.run4fun.BuildConfig.MAPS_API_KEY;
 
 public class WorkOutDataActivity extends AppCompatActivity implements OnMapReadyCallback {
 
+    public static final String CALORIES = "calories";
+    public static final String AVG_PACE = "avg";
     public static String DATE="date";
     public static String TIME="time";
     public static String DISTANCE="distance";
     public static String COORDINATES="coordinates";
-    public static String CALORIES="Calories";
-    public static String AVERAGE_VELOCITY ="AverageVelocity";
 
     private String date;
     private String time;
     private String distance;
     private String coordinates;
     private String calories;
-    private String averageVelocity;
+    private String avgPace;
 
     private GoogleMap googleMap;
     private MapView mapView;
@@ -58,14 +60,24 @@ public class WorkOutDataActivity extends AppCompatActivity implements OnMapReady
         time = intent.getExtras().getString(TIME);
         distance = intent.getExtras().getString(DISTANCE);
         coordinates = intent.getExtras().getString(COORDINATES);
+        calories = intent.getExtras().getString(CALORIES);
+        avgPace = intent.getExtras().getString(AVG_PACE);
         TextView tvDate = findViewById(R.id.date_value_edit_data_text);
         TextView tvTime = findViewById(R.id.time_value_edit_data_text);
         TextView tvDistance = findViewById(R.id.distatnce_value_edit_data_text);
+        TextView tvCalories = findViewById(R.id.calories_value_edit_data_text);
+        TextView tvAvgPace = findViewById(R.id.avg_pace_value_edit_data_text);
 
         //set data to labels
         tvDate.setText(date);
         tvTime.setText(time);
         tvDistance.setText(distance);
+
+        DecimalFormat df= new DecimalFormat("##.##");
+        String caloriesFormat=df.format(Double.parseDouble(calories));
+
+        tvCalories.setText(caloriesFormat);
+        tvAvgPace.setText(avgPace);
 
         //map
 
