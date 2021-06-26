@@ -9,14 +9,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10sp">
 
         <TextView
             android:id="@+id/timer_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:background="@drawable/boarder"
+            android:gravity="center"
             android:text="00:00:00"
             android:textSize="60sp" />
 
@@ -38,7 +39,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/velocity_text"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/velocity_value_textview"
@@ -61,7 +63,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/distance_text"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/distance_value_textview"
@@ -93,7 +96,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/calories_text"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/cal_value_textview"
@@ -115,7 +119,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/avg_pace_text"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/pace_value_textview"
@@ -129,47 +134,53 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="275dp"
             android:background="@drawable/boarder"
-            android:layout_height="360dp"
             android:orientation="vertical">
 
             <com.google.android.gms.maps.MapView
                 android:id="@+id/mapViewWorkOut"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="275dp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="bottom"
             android:orientation="vertical">
 
             <Button
                 android:id="@+id/pause_button"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_height="80sp"
                 android:onClick="onClickPause"
                 android:text="@string/pause_text"
-                android:textSize="25sp" />
+                android:textSize="25sp"
+                android:visibility="visible"
+                app:icon="@android:drawable/ic_media_pause"
+                app:iconGravity="textStart" />
 
             <Button
                 android:id="@+id/resume_button"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_height="80sp"
                 android:onClick="onClickResume"
                 android:text="@string/resume_text"
-                android:textSize="25sp" />
+                android:textSize="25sp"
+                app:icon="@android:drawable/ic_media_play"
+                app:iconGravity="textStart" />
 
             <Button
-                android:id="@+id/finish_button"
+                android:id="@+id/stop_button"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_height="80sp"
                 android:onClick="onClickFinish"
-                android:text="@string/finish_text"
-                android:textSize="25sp" />
+                android:text="@string/stop_text"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:icon="@android:drawable/editbox_dropdown_light_frame"
+                app:iconGravity="textStart" />
         </LinearLayout>
 
     </LinearLayout>

@@ -20,14 +20,16 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/date_text"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/date_value_edit_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -41,14 +43,16 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/distance_text"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/distatnce_value_edit_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -62,14 +66,16 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/time_text"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/time_value_edit_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout
