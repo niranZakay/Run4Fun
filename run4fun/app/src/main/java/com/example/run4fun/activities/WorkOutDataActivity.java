@@ -71,7 +71,7 @@ public class WorkOutDataActivity extends AppCompatActivity implements OnMapReady
         //set data to labels
         tvDate.setText(date);
         tvTime.setText(time);
-        tvDistance.setText(distance);
+        tvDistance.setText(distance+" KM");
 
         DecimalFormat df= new DecimalFormat("##.##");
         String caloriesFormat=df.format(Double.parseDouble(calories));

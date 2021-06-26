@@ -1,18 +1,24 @@
 package com.example.run4fun.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
@@ -24,6 +30,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.example.run4fun.Coordinate;
 import com.example.run4fun.R;
+import com.example.run4fun.services.LocationService;
 import com.example.run4fun.util.Pref;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -39,7 +46,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class WorkOutActivity extends AppCompatActivity implements LocationListener {
+import static com.example.run4fun.services.LocationService.DISABLE_GPS;
+import static com.example.run4fun.services.LocationService.LOCATION;
+
+public class WorkOutActivity extends AppCompatActivity  {
+    public static final String CHANNEL_ID = "run4fun";
     // Number of seconds displayed
     // on the stopwatch.
     private int seconds = 0;
@@ -72,10 +83,14 @@ public class WorkOutActivity extends AppCompatActivity implements LocationListen
 
     private static String TAG = "WorkOutActivity:";
     private LocationManager locationManager;
+    public BroadcastReceiver broadcastReceiver;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        startService();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work_out);
 
@@ -108,32 +123,71 @@ public class WorkOutActivity extends AppCompatActivity implements LocationListen
         tvDistance = findViewById(R.id.distance_value_textview);
         tvTimer = findViewById(R.id.timer_textview);
 
-        locationManager = (LocationManager)
-                getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-            return;
-        }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
         //get current date
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
         date = sdf.format(new Date());
 
+        //register broadcastreciver for location
+
+         broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+
+
+                Location location = (Location)intent.getExtras().get(LOCATION);
+                if(location!=null)
+                {
+                    onLocationChanged(location.getLatitude(),location.getLongitude());
+                }
+
+
+//                String string = (String)intent.getExtras().get(DISABLE_GPS);
+//                if(string!=null)
+//                {
+//                 onProviderDisabled();
+//                }
+
+
+                }
+
+
+        };
+
+
+
 
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
 
-        boolean gps_enabled = false;
-        boolean network_enabled = false;
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void startService()
+    {
+        createNotificationChannel();
+        registerReceiver(broadcastReceiver, new IntentFilter(LocationService.BROADCAST_ACTION));
+        Intent serviceIntent = new Intent(this, LocationService.class);
+        startForegroundService(serviceIntent);
+    }
+
+    public void stopService()
+    {
+        Intent serviceIntent = new Intent(this, LocationService.class);
+        stopService(serviceIntent);
+        unregisterReceiver(broadcastReceiver);
+    }
+
+
+
+    public void onLocationChanged(double latitude,double longitude) {
+
 
         if (running) {
-            Log.i(TAG, "Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
-            coordinates.add(new Coordinate(location.getLatitude(), location.getLongitude()));
+            Log.i(TAG, "Latitude:" + latitude + ", Longitude:" +  longitude);
+            coordinates.add(new Coordinate(latitude, longitude));
             if (coordinates.size() > 1) {
                 //calculate distance by the last point and the new point
-                distance += CalculationByDistance(new LatLng(coordinates.get(coordinates.size() - 2).latitude, coordinates.get(coordinates.size() - 2).longitude), new LatLng(location.getLatitude(), location.getLongitude()));
+                distance += CalculationByDistance(new LatLng(coordinates.get(coordinates.size() - 2).latitude, coordinates.get(coordinates.size() - 2).longitude), new LatLng(latitude, longitude));
                 //display it
                 DecimalFormat df = new DecimalFormat("#.###");
                 String dx = df.format(distance / KM_IN_METERS);
@@ -167,20 +221,10 @@ public class WorkOutActivity extends AppCompatActivity implements LocationListen
     }
 
 
-    public void endGPS() {
-        try {
-            locationManager.removeUpdates(this);
-            locationManager = null;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void onProviderDisabled(@NonNull String provider) {
+    public void onProviderDisabled() {
 
         // notify user
-        new AlertDialog.Builder(WorkOutActivity.this)
+        new AlertDialog.Builder(getBaseContext())
                 .setMessage(R.string.gps_network_not_enabled)
                 .setPositiveButton(R.string.open_location_settings, new DialogInterface.OnClickListener() {
                     @Override
@@ -196,7 +240,10 @@ public class WorkOutActivity extends AppCompatActivity implements LocationListen
     @Override
     protected void onStart() {
         super.onStart();
+        Intent intent = new Intent(this,LocationService.class);
+        startService(intent);
         running = true;
+
     }
 
     public double CalculationByDistance(LatLng startP, LatLng endP) {
@@ -222,6 +269,7 @@ public class WorkOutActivity extends AppCompatActivity implements LocationListen
     @Override
     protected void onPause() {
         super.onPause();
+        registerReceiver(broadcastReceiver, new IntentFilter(LocationService.BROADCAST_ACTION));
     }
 
 
@@ -231,6 +279,7 @@ public class WorkOutActivity extends AppCompatActivity implements LocationListen
     @Override
     protected void onResume() {
         super.onResume();
+        registerReceiver(broadcastReceiver, new IntentFilter(LocationService.BROADCAST_ACTION));
     }
 
     // Stop the stopwatch running
@@ -357,16 +406,12 @@ public class WorkOutActivity extends AppCompatActivity implements LocationListen
 
                 //convert distance from double to string format
                 DecimalFormat df = new DecimalFormat("##.##");
-                String distanceFormat = df.format(distance);
+                String distanceFormat = df.format(distance/ KM_IN_METERS);
                 intent.putExtra(WorkOutFinishActivity.DISTANCE, distanceFormat);
 
                 intent.putExtra(WorkOutFinishActivity.COORDINATES, jsonCoordinates);
                 startActivity(intent);
-                finish();
-
-                //stop get location
-                locationManager.removeUpdates(WorkOutActivity.this);
-                locationManager = null;
+                stopService();
 
                 finish();
                 dialog.dismiss();
@@ -402,7 +447,6 @@ public class WorkOutActivity extends AppCompatActivity implements LocationListen
     @Override
     protected void onStop() {
         super.onStop();
-        endGPS();
     }
 
 
@@ -422,6 +466,7 @@ public class WorkOutActivity extends AppCompatActivity implements LocationListen
             public void onClick(DialogInterface dialog, int which) {
                 //back to main activity
                 finish();
+                stopService();
                 dialog.dismiss();
             }
         });
@@ -439,5 +484,17 @@ public class WorkOutActivity extends AppCompatActivity implements LocationListen
 
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel serviceChannel = new NotificationChannel(
+                    CHANNEL_ID,
+                    "Example Service Channel",
+                    NotificationManager.IMPORTANCE_DEFAULT
+            );
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(serviceChannel);
+        }
     }
 }
