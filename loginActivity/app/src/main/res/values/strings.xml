@@ -39,8 +39,11 @@
     <string name="alert_before_discard_text">are you sure you want to discard? (the workout will delete)</string>
     <string name="workout_data_text">WorkOut Data</string>
     <string name="avg_pace_text">Avg. Pace:</string>
-    <string name="gender">Gender</string>
+    <string name="gender_text">Gender</string>
     <string name="bmr_text">BMR</string>
     <string name="male_text">Male</string>
     <string name="female_text">Female</string>
+    <string name="other_text">Other</string>
+    <string name="calories_graph_text">Calories Graph</string>
+    <string name="distance_graph_text">Distance Graph</string>
 </resources>

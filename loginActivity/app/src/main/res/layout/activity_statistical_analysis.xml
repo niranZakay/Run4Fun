@@ -24,7 +24,7 @@
             android:id="@+id/bar_chart_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/bar_chart_title_text"
+            android:text="@string/distance_graph_text"
             android:textSize="17sp" />
 
         <com.github.mikephil.charting.charts.BarChart
@@ -43,7 +43,7 @@
                 android:id="@+id/pie_chart_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/pai_chart_title_text"
+                android:text="@string/calories_graph_text"
                 android:textSize="17sp" />
 
             <com.github.mikephil.charting.charts.PieChart

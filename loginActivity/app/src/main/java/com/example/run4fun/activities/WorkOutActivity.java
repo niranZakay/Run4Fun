@@ -20,12 +20,15 @@ import android.widget.TextView;
 
 import com.example.run4fun.Coordinate;
 import com.example.run4fun.R;
+import com.example.run4fun.util.Pref;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.gson.Gson;
 import com.google.maps.android.SphericalUtil;
 
@@ -48,6 +51,8 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
 
     public static int KM_IN_METERS =1000;
     public static int SEC_IN_MINUTE =60;
+    public static double RUN_CONST =0.16;
+    public static double WALK_CONST =0.007;
 
     // Is the stopwatch running?
     private boolean running;
@@ -60,6 +65,7 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
     public static String time;
     private static double velocity=0;
     private static double avgPace=0;
+    private static double calories=0;
 
     private static List<Coordinate> coordinates =new ArrayList<>();
     private TextView tvDistance;
@@ -131,8 +137,14 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
     public void onLocationChanged(Location location) {
 
        Log.i(TAG, "Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
-        //set on map
-        googleMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("Me"));
+//        //set on map
+//        googleMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("Me"));
+
+        // Instantiates a new Polyline object and adds points to define a rectangle
+        PolylineOptions polylineOptions = new PolylineOptions()
+                .add(new LatLng(location.getLatitude(), location.getLongitude()));//
+        // Get back the mutable Polyline
+        Polyline polyline = googleMap.addPolyline(polylineOptions);
         //zoom it
         float zoomLevel = 16.0f;
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), zoomLevel));
@@ -168,7 +180,12 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
             int min = (int) ((avgPace / 60)%60);
             tvAvgPace.setText(String.format("%02d:%02d", min, sec));
 
-            //calculate distance and age
+            //calculate calories by weight minutes and const
+            double weight= Double.parseDouble(Pref.getValue(this,"weight","80"));
+            calories = RUN_CONST*weight*(totalSeconds/60);
+            DecimalFormat dc = new DecimalFormat("#");
+            String formatCalories=dc.format(calories);
+            tvCalories.setText(String.valueOf(formatCalories));
 
 
 
@@ -206,6 +223,8 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
         running = false;
         mapView.onPause();
     }
+
+
 
 
     // If the activity is resumed,
@@ -322,6 +341,8 @@ public class WorkOutActivity extends AppCompatActivity implements OnMapReadyCall
         Intent intent = new Intent(getBaseContext(), WorkOutFinishActivity.class);
         intent.putExtra(WorkOutFinishActivity.DATE,date);
         intent.putExtra(WorkOutFinishActivity.TIME,time);
+        intent.putExtra(WorkOutFinishActivity.CALORIES,String.valueOf(calories));
+        intent.putExtra(WorkOutFinishActivity.AVG_PACE,String.valueOf(avgPace));
 
         //convert distance from double to string format
         DecimalFormat df = new DecimalFormat("##.##");

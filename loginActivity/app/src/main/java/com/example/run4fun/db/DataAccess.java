@@ -9,11 +9,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.run4fun.Coordinate;
 import com.example.run4fun.WorkOut;
+import com.example.run4fun.util.Calorie;
+import com.example.run4fun.util.Distance;
 import com.google.gson.Gson;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 //added
@@ -42,13 +45,36 @@ public class DataAccess {
     }
 
 
-    public boolean addWorkOut(String date, String distance, String time,String jsonCoordinates)
+    public boolean addWorkOut(String date, String distance, String time,String jsonCoordinates,String calories,String avgPace)
     {
 
         ContentValues vals = new ContentValues();
         vals.put(WorkOutSchema.COLUMN_WORKOUT_DATE, date);
         vals.put(WorkOutSchema.COLUMN_WORKOUT_DISTANCE, distance);
         vals.put(WorkOutSchema.COLUMN_WORKOUT_TIME, time);
+        vals.put(WorkOutSchema.COLUMN_CALORIES, calories);
+        vals.put(WorkOutSchema.COLUMN_AVGPACE, avgPace);
+        vals.put(WorkOutSchema.COLUMN_COORDINATES, jsonCoordinates);
+        long result = db.insert(WorkOutSchema.WORKOUTS_TABLE, "null", vals);
+        if(result>0)
+        {
+            return true;
+        }
+        else
+        {
+            return false; //error occur
+        }
+    }
+
+    public boolean addWorkOutTesting(String date, String distance, String time,String jsonCoordinates,String calories,String avgPace)
+    {
+
+        ContentValues vals = new ContentValues();
+        vals.put(WorkOutSchema.COLUMN_WORKOUT_DATE, date);
+        vals.put(WorkOutSchema.COLUMN_WORKOUT_DISTANCE, distance);
+        vals.put(WorkOutSchema.COLUMN_WORKOUT_TIME, time);
+        vals.put(WorkOutSchema.COLUMN_CALORIES, calories);
+        vals.put(WorkOutSchema.COLUMN_AVGPACE, avgPace);
         vals.put(WorkOutSchema.COLUMN_COORDINATES, jsonCoordinates);
         long result = db.insert(WorkOutSchema.WORKOUTS_TABLE, "null", vals);
         if(result>0)
@@ -65,18 +91,59 @@ public class DataAccess {
     {
         List<WorkOut> workoOutList = new ArrayList<>();
         SQLiteDatabase sqLiteDatabase= helper.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.query(WorkOutSchema.WORKOUTS_TABLE,new String[]{WorkOutSchema.COLUMN_WORKOUT_DATE,WorkOutSchema.COLUMN_WORKOUT_DISTANCE,WorkOutSchema.COLUMN_WORKOUT_TIME,WorkOutSchema.COLUMN_COORDINATES},"",null,"","","");
+        Cursor cursor = sqLiteDatabase.query(WorkOutSchema.WORKOUTS_TABLE,new String[]{WorkOutSchema.COLUMN_WORKOUT_DATE,WorkOutSchema.COLUMN_WORKOUT_DISTANCE,WorkOutSchema.COLUMN_WORKOUT_TIME,WorkOutSchema.COLUMN_CALORIES,WorkOutSchema.COLUMN_AVGPACE,WorkOutSchema.COLUMN_COORDINATES},"",null,"","","");
         while(cursor.moveToNext())
         {
             String date = cursor.getString(cursor.getColumnIndex(WorkOutSchema.COLUMN_WORKOUT_DATE));
             String distance = cursor.getString(cursor.getColumnIndex(WorkOutSchema.COLUMN_WORKOUT_DISTANCE));
             String time = cursor.getString(cursor.getColumnIndex(WorkOutSchema.COLUMN_WORKOUT_TIME));
+            String calories = cursor.getString(cursor.getColumnIndex(WorkOutSchema.COLUMN_CALORIES));
+            String avg = cursor.getString(cursor.getColumnIndex(WorkOutSchema.COLUMN_AVGPACE));
             String coordinates = cursor.getString(cursor.getColumnIndex(WorkOutSchema.COLUMN_COORDINATES));
-            WorkOut workoOut = new WorkOut(date,distance,time, coordinates);
+            WorkOut workoOut = new WorkOut(date,distance,time, coordinates,calories,avg);
             workoOutList.add(workoOut);
         }
         cursor.close();
     return workoOutList;
+    }
+
+
+    public List<Calorie> fetchCalories()
+    {
+        List<Calorie> caloriesList = new ArrayList<>();
+        //get the current month
+        Calendar calendar = Calendar.getInstance();
+        int month= calendar.get(Calendar.MONTH);
+
+        SQLiteDatabase sqLiteDatabase= helper.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.query(WorkOutSchema.WORKOUTS_TABLE,new String[]{WorkOutSchema.COLUMN_CALORIES,WorkOutSchema.COLUMN_WORKOUT_DATE},"",null,"","","");
+        while(cursor.moveToNext())
+        {
+            Double calories = Double.parseDouble(cursor.getString(cursor.getColumnIndex(WorkOutSchema.COLUMN_CALORIES)));
+            String date = cursor.getString(cursor.getColumnIndex(WorkOutSchema.COLUMN_WORKOUT_DATE));
+            caloriesList.add(new Calorie(calories,date));
+        }
+        cursor.close();
+        return caloriesList;
+    }
+
+    public List<Distance> fetchDistance()
+    {
+        List<Distance> distanceList = new ArrayList<>();
+        //get the current month
+        Calendar calendar = Calendar.getInstance();
+        int month= calendar.get(Calendar.MONTH);
+
+        SQLiteDatabase sqLiteDatabase= helper.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.query(WorkOutSchema.WORKOUTS_TABLE,new String[]{WorkOutSchema.COLUMN_WORKOUT_DISTANCE,WorkOutSchema.COLUMN_WORKOUT_DATE},"",null,"","","");
+        while(cursor.moveToNext())
+        {
+            Double distance = Double.parseDouble(cursor.getString(cursor.getColumnIndex(WorkOutSchema.COLUMN_WORKOUT_DISTANCE)));
+            String date = cursor.getString(cursor.getColumnIndex(WorkOutSchema.COLUMN_WORKOUT_DATE));
+            distanceList.add(new Distance(distance,date));
+        }
+        cursor.close();
+        return distanceList;
     }
 
 

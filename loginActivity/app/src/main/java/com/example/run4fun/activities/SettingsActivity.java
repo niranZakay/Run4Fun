@@ -10,7 +10,6 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -26,12 +25,13 @@ import java.util.ArrayList;
 public class SettingsActivity extends AppCompatActivity {
 
     private static final String TAG = "Settings Activity:";
-
+    private Spinner genderSpinner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         adapterToListView();
+
 
     }
 
@@ -40,42 +40,18 @@ public class SettingsActivity extends AppCompatActivity {
         // Construct the data source
         ArrayList<SettingItem> arrayOfSettingItem= new ArrayList<SettingItem>();
         //add items to listView
+        arrayOfSettingItem.add(new SettingItem(getString(R.string.gender_text),Pref.getValue(this,"gender", "Male")));
         arrayOfSettingItem.add(new SettingItem(getString(R.string.height_text),Pref.getValue(this,"height", "175")));
         arrayOfSettingItem.add(new SettingItem(getString(R.string.weight_text),Pref.getValue(this,"weight", "70")));
         arrayOfSettingItem.add(new SettingItem(getString(R.string.age_text),Pref.getValue(this,"age", "24")));
-        arrayOfSettingItem.add(new SettingItem(getString(R.string.bmr_text),Pref.getValue(this,"BMR", "24")));
+        arrayOfSettingItem.add(new SettingItem(getString(R.string.bmr_text),Pref.getValue(this,"bmr", "24")));
         // Create the adapter to convert the array to views
         SettingsAdapter adapter = new SettingsAdapter(this, arrayOfSettingItem);
         // Attach the adapter to a ListView
         ListView listView = (ListView) findViewById(R.id.settings_listview);
         listView.setAdapter(adapter);
 
-        //get the spinner from the xml.
-        Spinner genderSpinner = findViewById(R.id.spinner);
-//create a list of items for the spinner.
-        String[] items = new String[]{getString(R.string.male_text),getString(R.string.female_text)};
-//create an adapter to describe how the items are displayed, adapters are used in several places in android.
-//There are multiple variations of this, but this is the basic variant.
-        ArrayAdapter<String> adapterForSpinner = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
-//set the spinners adapter to the previously created one.
-        genderSpinner.setAdapter(adapterForSpinner);
-        genderSpinner.setPrompt(Pref.getValue(this,"gender", "Male"));
 
-        genderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                                    @Override
-                                                    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                                                        Spinner genderSpinner = findViewById(R.id.spinner);
-                                                        Pref.setValue(getApplicationContext(),"gender",parentView.getItemAtPosition(position).toString());
-                                                        genderSpinner.setPrompt(Pref.getValue(getApplicationContext(),"gender", parentView.getItemAtPosition(position).toString()));
-                                                        Toast.makeText(getApplicationContext(),"'"+"Gender" +"' change to '"+parentView.getItemAtPosition(position).toString()+"' successfully",Toast.LENGTH_SHORT).show();
-//                                                        restartActivity();
-                                                    }
-
-                                                    @Override
-                                                    public void onNothingSelected(AdapterView<?> parentView) {
-                                                        // your code here
-                                                    }
-                                                });
 
         //add listner for click on the list
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -84,22 +60,30 @@ public class SettingsActivity extends AppCompatActivity {
                 Log.i(TAG, "click on listview with position: " +String.valueOf(itemPosition));
                 switch (itemPosition) {
 
-                    //height
+                    //gender
                     case 0:
                     {
-                        createAlertDialogToSettingItem(getString(R.string.height_text),getString(R.string.please_enter_text) +" "+getString(R.string.height_text));
+                        createAlertDialogWithRadioButtonToSettingItem();
+
+                    }
+                    break;
+                    //height
+                    case 1:
+                    {
+                        createAlertDialogWithEditTextToSettingItem(getString(R.string.height_text),getString(R.string.please_enter_text) +" "+getString(R.string.height_text));
+
                     }
                         break;
                     //weight
-                    case 1:
+                    case 2:
                     {
-                        createAlertDialogToSettingItem(getString(R.string.weight_text),getString(R.string.please_enter_text)+" "+getString(R.string.weight_text));
+                        createAlertDialogWithEditTextToSettingItem(getString(R.string.weight_text),getString(R.string.please_enter_text)+" "+getString(R.string.weight_text));
                     }
                         break;
                     //age
-                    case 2:
+                    case 3:
                     {
-                        createAlertDialogToSettingItem(getString(R.string.age_text),getString(R.string.please_enter_text )+" "+getString(R.string.age_text));
+                        createAlertDialogWithEditTextToSettingItem(getString(R.string.age_text),getString(R.string.please_enter_text )+" "+getString(R.string.age_text));
                     }
                     break;
 
@@ -107,11 +91,12 @@ public class SettingsActivity extends AppCompatActivity {
                         break;
                 }
 
+
             }
         });
     }
 
-    public void createAlertDialogToSettingItem(String title,String message)
+    public void createAlertDialogWithEditTextToSettingItem(String title, String message)
     {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle(title);
@@ -127,6 +112,7 @@ public class SettingsActivity extends AppCompatActivity {
                 String value = input.getText().toString();
                 Pref.setValue(getApplicationContext(),title.toLowerCase(),value);
                 Toast.makeText(getApplicationContext(),"'"+title +"' change to '"+value+"' successfully",Toast.LENGTH_SHORT).show();
+                calculateBmr();
                 restartActivity();
             }
         });
@@ -141,10 +127,76 @@ public class SettingsActivity extends AppCompatActivity {
         alert.show();
     }
 
+    private void createAlertDialogWithRadioButtonToSettingItem() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(SettingsActivity.this);
+        alertDialog.setTitle("Gender");
+        String[] items = {"Male","Female","Other"};
+        int checkedItem = 0;
+        alertDialog.setSingleChoiceItems(items, checkedItem, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0:
+                        Pref.setValue(getApplicationContext(),"gender",getString(R.string.male_text));
+                        Toast.makeText(getApplicationContext(),"'"+"Gender" +"' change to '"+getString(R.string.male_text)+"' successfully",Toast.LENGTH_SHORT).show();
+                        calculateBmr();
+                        break;
+                    case 1:
+                        Pref.setValue(getApplicationContext(),"gender",getString(R.string.female_text));
+                        Toast.makeText(getApplicationContext(),"'"+"Gender" +"' change to '"+getString(R.string.female_text)+"' successfully",Toast.LENGTH_SHORT).show();
+                        calculateBmr();
+                        break;
+                    case 2:
+                        Pref.setValue(getApplicationContext(),"gender",getString(R.string.other_text));
+                        Toast.makeText(getApplicationContext(),"'"+"Gender" +"' change to '"+getString(R.string.other_text)+"' successfully",Toast.LENGTH_SHORT).show();
+                        calculateBmr();
+                        break;
+
+                }
+                dialog.dismiss();
+                restartActivity();
+            }
+        });
+        AlertDialog alert = alertDialog.create();
+        alert.setCanceledOnTouchOutside(false);
+        alert.show();
+    }
+
     private void restartActivity() {
         Intent starterIntent = getIntent();
         finish();
         startActivity(starterIntent);
+    }
+
+    private void calculateBmr()
+    {
+        //by https://www.omnicalculator.com/health/bmr-harris-benedict-equation#what-is-a-bmr-calculator
+       String gender = Pref.getValue(this,"gender", "Male");
+       double height =Double.parseDouble(Pref.getValue(this,"height", "175"));
+       double weight = Double.parseDouble(Pref.getValue(this,"weight", "70"));
+       double age = Double.parseDouble(Pref.getValue(this,"age", "24"));
+       double bmr = 0;
+       double constGender;
+
+       double CONST_AGE = 5;
+       double CONST_HEIGHT = 6.25;
+       double CONST_WEIGHT = 10;
+       double CONST_MALE = 5;
+       double CONST_FEMALE = -161;
+
+
+
+       if(gender.toLowerCase().equals("male"))
+       {
+           constGender = CONST_MALE;
+       }
+       else
+       {
+           constGender= CONST_FEMALE;
+       }
+
+        bmr = (CONST_WEIGHT*weight)+(height*CONST_HEIGHT)-(age*CONST_AGE)+constGender;
+        Pref.setValue(this,"bmr",String.valueOf(bmr));
     }
 
 }

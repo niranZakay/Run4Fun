@@ -15,6 +15,7 @@ public class WorkOutHistoryItem {
     public String coordinatesKey;
     public String coordinatesValue;
 
+
     public WorkOutHistoryItem(String dateKey, String dateValue , String distanceKey, String distanceValue, String timeKey , String timeValue, String coordinatesKey,String coordinatesValue)
     {
         this.dateKey = dateKey;
