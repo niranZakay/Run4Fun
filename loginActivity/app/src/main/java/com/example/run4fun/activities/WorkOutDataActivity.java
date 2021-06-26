@@ -12,6 +12,8 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.gson.Gson;
 
 import android.Manifest;
@@ -105,21 +107,21 @@ public class WorkOutDataActivity extends AppCompatActivity implements OnMapReady
         {
             MarkerOptions options = new MarkerOptions();
             ArrayList<LatLng> latlngs = new ArrayList<>();
+            float zoomLevel = 16.0f;
 
             for (Coordinate coordinate:coordinatesList)
             {
                 latlngs.add(new LatLng(coordinate.latitude, coordinate.longitude));
             }
-
+            PolylineOptions polylineOptions = new PolylineOptions();
             //drew on map
             for (LatLng point : latlngs) {
-                options.position(point);
-                options.title("Me");
-                options.snippet("someDesc");
-                googleMap.addMarker(options);
-                float zoomLevel = 16.0f;
+                polylineOptions.add(point);
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, zoomLevel));
             }
+            // Instantiates a new Polyline object and adds points to define a rectangle
+            // Get back the mutable Polyline
+            Polyline polyline = googleMap.addPolyline(polylineOptions);
 
         }
     }

@@ -10,11 +10,13 @@ import com.example.run4fun.R;
 import com.example.run4fun.WorkOut;
 import com.example.run4fun.db.DataAccess;
 import com.example.run4fun.db.WorkOutSchema;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.gson.Gson;
 
@@ -43,6 +45,8 @@ import static com.example.run4fun.BuildConfig.MAPS_API_KEY;
 
 public class WorkOutFinishActivity extends AppCompatActivity implements OnMapReadyCallback {
 
+    public static final String CALORIES = "calories";
+    public static final String AVG_PACE = "avg";
     public static WorkOut workOut = new WorkOut();
     public static String DATE="date";
     public static String TIME="time";
@@ -53,6 +57,8 @@ public class WorkOutFinishActivity extends AppCompatActivity implements OnMapRea
     private String time;
     private String distance;
     private String coordinates;
+    private String calories;
+    private String avgPace;
     private GoogleMap googleMap;
     private MapView mapView;
     @Override
@@ -64,6 +70,8 @@ public class WorkOutFinishActivity extends AppCompatActivity implements OnMapRea
         time = intent.getExtras().getString(TIME);
         distance = intent.getExtras().getString(DISTANCE);
         coordinates = intent.getExtras().getString(COORDINATES);
+        avgPace = intent.getExtras().getString(AVG_PACE);
+        calories = intent.getExtras().getString(CALORIES);
         TextView tvDate = findViewById(R.id.date_value_edit_finish_text);
         TextView tvTime = findViewById(R.id.time_value_edit_finish_text);
         TextView tvDistance = findViewById(R.id.distatnce_value_edit_finish_text);
@@ -71,7 +79,8 @@ public class WorkOutFinishActivity extends AppCompatActivity implements OnMapRea
         //set data to labels
         tvDate.setText(date);
         tvTime.setText(time);
-        tvDistance.setText(distance);
+        tvDistance.setText(distance+ " KM");
+
 
         Button saveButton = findViewById(R.id.save_button);
         Button discardButton = findViewById(R.id.discard_button);
@@ -102,7 +111,14 @@ public class WorkOutFinishActivity extends AppCompatActivity implements OnMapRea
                     public void onClick(DialogInterface dialog, int which) {
                         //save the workout in db sqlite
                         DataAccess dataAccess = DataAccess.DataAccess(getApplicationContext(), WorkOutSchema.databaseName);
-                        boolean result = dataAccess.addWorkOut(date, distance, time, coordinates);
+
+
+                        //for test only######
+                        testing(dataAccess);
+
+
+
+                        boolean result = dataAccess.addWorkOut(date, distance, time, coordinates,calories,avgPace);
                         if (result) {
                             //save success
                             Log.i(TAG, "db save results: successfully");
@@ -204,19 +220,21 @@ public class WorkOutFinishActivity extends AppCompatActivity implements OnMapRea
         {
             MarkerOptions options = new MarkerOptions();
             ArrayList<LatLng> latlngs = new ArrayList<>();
+            float zoomLevel = 16.0f;
 
             for (Coordinate coordinate:coordinatesList)
             {
                 latlngs.add(new LatLng(coordinate.latitude, coordinate.longitude));
             }
-
+            PolylineOptions polylineOptions = new PolylineOptions();
             //drew on map
             for (LatLng point : latlngs) {
-                options.position(point);
-                options.title("Me");
-                options.snippet("someDesc");
-                googleMap.addMarker(options);
+                polylineOptions.add(point);
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(point, zoomLevel));
             }
+            // Instantiates a new Polyline object and adds points to define a rectangle
+            // Get back the mutable Polyline
+            Polyline polyline = googleMap.addPolyline(polylineOptions);
 
         }
     }
@@ -231,5 +249,12 @@ public class WorkOutFinishActivity extends AppCompatActivity implements OnMapRea
     protected void onPause() {
         super.onPause();
         mapView.onPause();
+    }
+
+    public void testing(DataAccess dataAccess)
+    {
+        dataAccess.addWorkOutTesting("26-04-2021","100","1:35"," ","187","5:40");
+        dataAccess.addWorkOutTesting("26-03-2021","50","1:35"," ","100","5:40");
+        dataAccess.addWorkOutTesting("26-01-2021","12","2:35"," ","190","5:42");
     }
 }

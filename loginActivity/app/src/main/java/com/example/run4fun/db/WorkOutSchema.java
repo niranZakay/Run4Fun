@@ -9,6 +9,8 @@ public class WorkOutSchema {
     public final static String COLUMN_WORKOUT_DISTANCE = "distance";
     public final static String COLUMN_WORKOUT_TIME = "time";
     public final static String COLUMN_COORDINATES = "Coordinate";
+    public final static String COLUMN_CALORIES = "Calories";
+    public final static String COLUMN_AVGPACE= "Avg";
 
 
     protected final static String CREATE_TABLE_WORKOUTS ="CREATE TABLE "+ WORKOUTS_TABLE+ "("+
@@ -16,6 +18,8 @@ public class WorkOutSchema {
             COLUMN_WORKOUT_DATE+" TEXT NOT NULL,"+
             COLUMN_WORKOUT_DISTANCE+" TEXT NOT NULL,"+
             COLUMN_WORKOUT_TIME+" TEXT NOT NULL,"+
+            COLUMN_CALORIES+" TEXT NOT NULL,"+
+            COLUMN_AVGPACE+" TEXT NOT NULL,"+
             COLUMN_COORDINATES+" TEXT NOT NULL)";
 
 
