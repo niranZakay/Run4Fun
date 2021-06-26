@@ -413,6 +413,11 @@ public class WorkOutActivity extends AppCompatActivity  {
                 startActivity(intent);
                 stopService();
 
+                jsonCoordinates = "";
+                distance = 0;
+                avgPace= "00:00";
+                calories = 0;
+
                 finish();
                 dialog.dismiss();
             }
