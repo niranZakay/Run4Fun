@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config>
+        <device id="pixel" />
+        <device id="pixel_4_xl" />
+      </config>
+    </shared>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c2e68239-acf5-4e9b-929c-b119b22c46e3" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/google-services.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/proguard-rules.pro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/androidTest/java/com/example/run4fun/ExampleInstrumentedTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/run4fun/Coordinate.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/run4fun/SettingItem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/run4fun/WorkOut.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/run4fun/WorkOutHistoryItem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/run4fun/activities/LoginActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/run4fun/activities/MainActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/run4fun/activities/SettingsActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/run4fun/activities/SignUpActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/run4fun/activities/StatisticalAnalysisActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/run4fun/activities/WorkOutActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/run4fun/activities/WorkOutDataActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/run4fun/activities/WorkOutFinishActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/run4fun/activities/WorkOutHistoryActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/run4fun/adapters/SettingsAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/run4fun/adapters/WorkOutHistoryAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/run4fun/db/DataAccess.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/run4fun/db/WorkOutSchema.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/run4fun/util/Calorie.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/run4fun/util/Distance.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/run4fun/util/Pref.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/run4fun/util/TempSum.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-v24/boarder.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-v24/f892ffca824ec2377bb3f751565cce2d.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-v24/run4funicon.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/button.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/button2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/gradient.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_launcher_background.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_signup.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_statistical_analysis.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_work_out.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_work_out_data.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_work_out_finish.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_work_out_history.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/map_fragment_layout.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/settings_layout.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/workout_history_layout.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-night/themes.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/com/example/run4fun/ExampleUnitTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[SerialNumber@271aaf21c81c7ece]" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="loginActivity" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="loginActivity" type="f1a62948:ProjectNode" />
+                <item name="app" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="loginActivity" type="f1a62948:ProjectNode" />
+                <item name="app" type="2d1252cf:ModuleNode" />
+                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="layoutResourceFile" />
+        <option value="valueResourceFile" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1u3piMrbUmTr5zSEJA6bK0JT7EE" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="SerialNumber@271aaf21c81c7ece" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-06-26T07:29:54.909170800Z" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="android-custom-viewC:/Users/idan/AppData/Local/Android/sdk/sources/android-29/android/widget/AdapterView.java_SELECTED" value="AdapterView" />
+    <property name="android-custom-viewC:/Users/idan/AppData/Local/Android/sdk/sources/android-29/android/widget/ListView.java_SELECTED" value="ListView" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/java" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../run4fun" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.17" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+  </component>
+  <component name="PsdUISettings">
+    <option name="LAST_EDITED_BUILD_TYPE" value="release" />
+  </component>
+  <component name="RecentsManager">
+    <key name="android.template.1291549199">
+      <recent name="com.example.run4fun.activities" />
+      <recent name="com.example.loginactivity.activities" />
+      <recent name="com.example.loginactivity" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.example.run4fun" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\idan\OneDrive\Desktop\dev\Run4Fun\loginActivity\app\src\main\res\drawable-v24" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.run4fun.db" />
+    </key>
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.example.run4fun.activities" />
+      <recent name="com.example.run4fun.util" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="keytool -list -v -keystore &quot;%USERPROFILE%\.android\debug.keystore&quot; -alias androiddebugkey -storepass android -keypass android" />
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="loginActivity.app" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ALL_USERS" value="false" />
+      <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
+      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c2e68239-acf5-4e9b-929c-b119b22c46e3" name="Default Changelist" comment="" />
+      <created>1623904252312</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1623904252312</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="45" y="30" key="#PSD" timestamp="1624694688781">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="45" y="30" key="#PSD/0.0.1280.680/-1920.-316.1280.680@0.0.1280.680" timestamp="1624694688781" />
+    <state x="45" y="30" key="#PSD/0.0.1280.680@0.0.1280.680" timestamp="1624370118548" />
+    <state x="97" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1624694554079">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="97" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680/-1920.-316.1280.680@0.0.1280.680" timestamp="1624694554079" />
+    <state x="399" y="0" key="#com.intellij.ide.util.MemberChooser" timestamp="1624510307033">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="399" y="0" key="#com.intellij.ide.util.MemberChooser/0.0.1280.680/-1920.-316.1280.680@0.0.1280.680" timestamp="1624202524535" />
+    <state x="399" y="0" key="#com.intellij.ide.util.MemberChooser/0.0.1280.680@0.0.1280.680" timestamp="1624510307033" />
+    <state x="312" y="68" key="#com.intellij.ide.util.PackageChooserDialog" timestamp="1624128096708">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="312" y="68" key="#com.intellij.ide.util.PackageChooserDialog/0.0.1280.680/-1920.-316.1280.680@0.0.1280.680" timestamp="1624128096708" />
+    <state x="-1545" y="-131" width="531" height="323" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1624169579443">
+      <screen x="-1920" y="-316" width="1280" height="680" />
+    </state>
+    <state x="-1545" y="-131" width="531" height="323" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1280.680/-1920.-316.1280.680@-1920.-316.1280.680" timestamp="1624169579443" />
+    <state x="-1920" y="-316" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1624181080974">
+      <screen x="-1920" y="-316" width="1280" height="680" />
+    </state>
+    <state x="-1920" y="-316" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1280.680/-1920.-316.1280.680@-1920.-316.1280.680" timestamp="1624181080974" />
+    <state x="59" y="150" width="1080" height="480" key="AVDManager" timestamp="1624619816516">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="-1835" y="-205" width="1080" height="480" key="AVDManager/0.0.1280.680/-1920.-316.1280.680@-1920.-316.1280.680" timestamp="1624182137015" />
+    <state x="59" y="150" width="1080" height="480" key="AVDManager/0.0.1280.680/-1920.-316.1280.680@0.0.1280.680" timestamp="1624619816516" />
+    <state x="85" y="111" width="1080" height="480" key="AVDManager/0.0.1280.680@0.0.1280.680" timestamp="1624424400017" />
+    <state x="224" y="92" key="AndroidCreateResourceFileDialog" timestamp="1624195415195">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="224" y="92" key="AndroidCreateResourceFileDialog/0.0.1280.680/-1920.-316.1280.680@0.0.1280.680" timestamp="1624195415195" />
+    <state x="462" y="105" key="AndroidCreateXmlResourceDialog" timestamp="1624691454105">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="462" y="105" key="AndroidCreateXmlResourceDialog/0.0.1280.680/-1920.-316.1280.680@0.0.1280.680" timestamp="1624691454105" />
+    <state x="462" y="105" key="AndroidCreateXmlResourceDialog/0.0.1280.680@0.0.1280.680" timestamp="1624510176698" />
+    <state x="368" y="37" key="FileChooserDialogImpl" timestamp="1624694710138">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="-1552" y="-279" key="FileChooserDialogImpl/0.0.1280.680/-1920.-316.1280.680@-1920.-316.1280.680" timestamp="1624178433851" />
+    <state x="368" y="37" key="FileChooserDialogImpl/0.0.1280.680/-1920.-316.1280.680@0.0.1280.680" timestamp="1624694710138" />
+    <state x="368" y="37" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1624351351817" />
+    <state width="1225" height="3" key="GridCell.Tab.0.bottom" timestamp="1624694277716">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1210" height="36" key="GridCell.Tab.0.bottom/0.0.1280.680/-1920.-316.1280.680@-1920.-316.1280.680" timestamp="1624183440660" />
+    <state width="1225" height="3" key="GridCell.Tab.0.bottom/0.0.1280.680/-1920.-316.1280.680@0.0.1280.680" timestamp="1624694277716" />
+    <state width="1225" height="63" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1624543607501" />
+    <state width="1225" height="3" key="GridCell.Tab.0.center" timestamp="1624694277715">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1210" height="36" key="GridCell.Tab.0.center/0.0.1280.680/-1920.-316.1280.680@-1920.-316.1280.680" timestamp="1624183440660" />
+    <state width="1225" height="3" key="GridCell.Tab.0.center/0.0.1280.680/-1920.-316.1280.680@0.0.1280.680" timestamp="1624694277715" />
+    <state width="1225" height="63" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1624543607500" />
+    <state width="1225" height="3" key="GridCell.Tab.0.left" timestamp="1624694277715">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1210" height="36" key="GridCell.Tab.0.left/0.0.1280.680/-1920.-316.1280.680@-1920.-316.1280.680" timestamp="1624183440660" />
+    <state width="1225" height="3" key="GridCell.Tab.0.left/0.0.1280.680/-1920.-316.1280.680@0.0.1280.680" timestamp="1624694277715" />
+    <state width="1225" height="63" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1624543607500" />
+    <state width="1225" height="3" key="GridCell.Tab.0.right" timestamp="1624694277716">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1210" height="36" key="GridCell.Tab.0.right/0.0.1280.680/-1920.-316.1280.680@-1920.-316.1280.680" timestamp="1624183440660" />
+    <state width="1225" height="3" key="GridCell.Tab.0.right/0.0.1280.680/-1920.-316.1280.680@0.0.1280.680" timestamp="1624694277716" />
+    <state width="1225" height="63" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1624543607501" />
+    <state width="1225" height="55" key="GridCell.Tab.1.bottom" timestamp="1624694277587">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1210" height="282" key="GridCell.Tab.1.bottom/0.0.1280.680/-1920.-316.1280.680@-1920.-316.1280.680" timestamp="1624183440653" />
+    <state width="1225" height="55" key="GridCell.Tab.1.bottom/0.0.1280.680/-1920.-316.1280.680@0.0.1280.680" timestamp="1624694277587" />
+    <state width="1225" height="3" key="GridCell.Tab.1.bottom/0.0.1280.680@0.0.1280.680" timestamp="1624542932787" />
+    <state width="1225" height="55" key="GridCell.Tab.1.center" timestamp="1624694277586">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1210" height="282" key="GridCell.Tab.1.center/0.0.1280.680/-1920.-316.1280.680@-1920.-316.1280.680" timestamp="1624183440653" />
+    <state width="1225" height="55" key="GridCell.Tab.1.center/0.0.1280.680/-1920.-316.1280.680@0.0.1280.680" timestamp="1624694277586" />
+    <state width="1225" height="3" key="GridCell.Tab.1.center/0.0.1280.680@0.0.1280.680" timestamp="1624542932787" />
+    <state width="1225" height="55" key="GridCell.Tab.1.left" timestamp="1624694277586">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1210" height="282" key="GridCell.Tab.1.left/0.0.1280.680/-1920.-316.1280.680@-1920.-316.1280.680" timestamp="1624183440652" />
+    <state width="1225" height="55" key="GridCell.Tab.1.left/0.0.1280.680/-1920.-316.1280.680@0.0.1280.680" timestamp="1624694277586" />
+    <state width="1225" height="3" key="GridCell.Tab.1.left/0.0.1280.680@0.0.1280.680" timestamp="1624542932786" />
+    <state width="1225" height="55" key="GridCell.Tab.1.right" timestamp="1624694277586">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1210" height="282" key="GridCell.Tab.1.right/0.0.1280.680/-1920.-316.1280.680@-1920.-316.1280.680" timestamp="1624183440653" />
+    <state width="1225" height="55" key="GridCell.Tab.1.right/0.0.1280.680/-1920.-316.1280.680@0.0.1280.680" timestamp="1624694277586" />
+    <state width="1225" height="3" key="GridCell.Tab.1.right/0.0.1280.680@0.0.1280.680" timestamp="1624542932787" />
+    <state x="33" y="0" key="SettingsEditor" timestamp="1624620321975">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="33" y="0" key="SettingsEditor/0.0.1280.680/-1920.-316.1280.680@0.0.1280.680" timestamp="1624620321975" />
+    <state x="33" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1624370752742" />
+    <state x="433" y="109" key="chooseDestDirectoryDialog" timestamp="1624128228046">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="433" y="109" key="chooseDestDirectoryDialog/0.0.1280.680/-1920.-316.1280.680@0.0.1280.680" timestamp="1624128228046" />
+    <state x="-1665" y="-201" key="com.android.tools.idea.run.deployment.SelectMultipleDevicesDialog" timestamp="1624181892733">
+      <screen x="-1920" y="-316" width="1280" height="680" />
+    </state>
+    <state x="-1665" y="-201" key="com.android.tools.idea.run.deployment.SelectMultipleDevicesDialog/0.0.1280.680/-1920.-316.1280.680@-1920.-316.1280.680" timestamp="1624181892733" />
+    <state x="339" y="170" key="psd.add.jar.dependency.panel.dimension" timestamp="1624298353109">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="339" y="170" key="psd.add.jar.dependency.panel.dimension/0.0.1280.680@0.0.1280.680" timestamp="1624298353109" />
+    <state x="327" y="55" key="refactoring.ChangeSignatureDialog" timestamp="1624624058088">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="327" y="55" key="refactoring.ChangeSignatureDialog/0.0.1280.680/-1920.-316.1280.680@0.0.1280.680" timestamp="1624624058088" />
+    <state x="219" y="152" width="840" height="1034" key="run.anything.popup" timestamp="1624251484403">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="219" y="152" key="run.anything.popup/0.0.1280.680/-1920.-316.1280.680@0.0.1280.680" timestamp="1624127304910" />
+    <state x="219" y="152" width="840" height="1034" key="run.anything.popup/0.0.1280.680@0.0.1280.680" timestamp="1624251484403" />
+    <state x="219" y="0" width="840" height="1034" key="search.everywhere.popup" timestamp="1624689420115">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="219" y="0" width="840" height="1034" key="search.everywhere.popup/0.0.1280.680/-1920.-316.1280.680@0.0.1280.680" timestamp="1624689420115" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/run4fun/db/DataAccess.java</url>
+          <line>67</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/run4fun/activities/WorkOutHistoryActivity.java</url>
+          <line>33</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/run4fun/activities/WorkOutHistoryActivity.java</url>
+          <line>45</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/run4fun/activities/WorkOutActivity.java</url>
+          <line>147</line>
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/run4fun/activities/SettingsActivity.java</url>
+          <line>51</line>
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/run4fun/activities/SettingsActivity.java</url>
+          <line>199</line>
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/run4fun/activities/WorkOutActivity.java</url>
+          <line>174</line>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/run4fun/activities/WorkOutFinishActivity.java</url>
+          <line>65</line>
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/run4fun/activities/StatisticalAnalysisActivity.java</url>
+          <line>61</line>
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/run4fun/activities/WorkOutFinishActivity.java</url>
+          <line>103</line>
+          <option name="timeStamp" value="46" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
