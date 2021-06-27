@@ -52,4 +52,5 @@
     <string name="alarm_text">dont forget to training today!!!</string>
     <string name="service_name">LocationService</string>
     <string name="service_status_monitor">running...</string>
+    <string name="hello_user_text">Hello, User</string>
 </resources>
